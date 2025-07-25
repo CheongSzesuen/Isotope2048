@@ -1,0 +1,34 @@
+{
+  "package": "com.isotope.2048.band",
+  "name": "同位素2048",
+  "versionName": "1.0",
+  "versionCode": 1,
+  "minPlatformVersion": 1000,
+  "icon": "/common/logo.png",
+  "deviceTypeList": [
+    "watch"
+  ],
+  "features": [
+    {
+      "name": "system.router"
+    },
+    {
+      "name": "system.prompt"
+    },
+    {
+      "name": "system.storage"
+    }
+  ],
+  "config": {
+    "logLevel": "log",
+    "designWidth": "device-width"
+  },
+  "router": {
+    "entry": "pages/index",
+    "pages": {
+	"pages/index": {
+		"component": "index"
+	}
+}
+  }
+}

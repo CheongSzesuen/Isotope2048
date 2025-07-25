@@ -1,0 +1,3821 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Isotopic 2048</title>
+
+    <link href="style/main.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport"
+        content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <meta property="og:title" content="Isotopic 256 game" />
+    <meta property="og:site_name" content="Isotopic 256 game" />
+    <meta property="og:description" content="Join the elements and get to the tile with 256 isotopic mass!" />
+    <meta property="og:image" content="meta/og_image.png">
+</head>
+
+<body>
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "http://connect.facebook.net/en_GB/all.js#xfbml=1&appId=286398341458788";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Isotopic 2048</h1>
+            <div class="scores-container">
+                <div class="score-container">0</div>
+                <div class="best-container">0</div>
+            </div>
+        </div>
+        <p class="game-intro">Join the elements and get to the tile with <strong>2048 isotopic mass!</strong> Watch out
+            for unstable elements though, as these won't be around forever!</p>
+
+        <div class="game-container">
+            <div class="game-message">
+                <p></p>
+                <div class="lower">
+                    <a class="keep-playing-button">Keep going</a>
+                    <a class="retry-button">Try again</a>
+                    <div class="score-sharing"></div>
+                    <div class="fb-like" data-href="https://www.facebook.com/Isotopic256" data-layout="button_count"
+                        data-action="like" data-show-faces="true" data-share="false"></div>
+                    <div class="fb-share-button" data-href="http://jamesdonnelly.github.io/Isotopic256/"
+                        data-type="button_count"></div>
+                </div>
+            </div>
+
+            <div class="grid-container">
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+            </div>
+
+            <div class="tile-container">
+
+            </div>
+        </div>
+
+        <div class="tile-counter">
+
+        </div>
+
+        <p class="game-explanation">
+            <strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When
+            two tiles with the same number touch, they <strong>merge into one!</strong>
+        </p>
+        <hr>
+        <p><strong class="important">Update <small>(8th April)</small>:</strong> Somebody created an official Facebook
+            page for the original version of Isotopic 256, which can be found <a
+                href="https://www.facebook.com/Isotopic256">here</a>. He'd love to hear any suggestions you may have!
+        </p>
+        <hr>
+        <p>
+            <strong class="important">Note:</strong> This site is also a fork of the official version of 2048, which can
+            be found <a href="http://gabrielecirulli.github.io/2048/">here</a>.
+        </p>
+        <hr>
+        <p>
+            Official Isotopic 256 modified by <a href="http://jamesmdonnelly.com" target="_blank">James Donnelly</a>.
+            Forked from 2048 by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a
+                href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and
+            conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
+        </p>
+        <div class="sharing">
+            <a href="https://twitter.com/share" class="twitter-share-button"
+                data-text="Check out Isotopic 256, a game where you join elements to score high! #isotopic256"
+                data-via="inb4" data-url="http://jamesdonnelly.github.io/Isotopic256"
+                data-counturl="http://jamesdonnelly.github.io/Isotopic256">Tweet</a>
+            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+
+        </div>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- Isotopic256 -->
+        <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"
+            data-ad-client="ca-pub-2392072084174849" data-ad-slot="8821322539"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <script src="js/animframe_polyfill.js"></script>
+    <script src="js/keyboard_input_manager.js"></script>
+    <script src="js/html_actuator.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/tile.js"></script>
+    <script src="js/local_score_manager.js"></script>
+    <script src="js/game_manager.js"></script>
+    <script src="js/application.js"></script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-49576252-1', 'jamesdonnelly.github.io');
+        ga('send', 'pageview');
+    </script>
+</body>
+
+</html>
+
+
+(function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+      window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+      window.cancelAnimationFrame =
+      window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+  
+    if (!window.requestAnimationFrame) {
+      window.requestAnimationFrame = function(callback, element) {
+        var currTime = new Date().getTime();
+        var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+        var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+        timeToCall);
+        lastTime = currTime + timeToCall;
+        return id;
+      };
+    }
+  
+    if (!window.cancelAnimationFrame) {
+      window.cancelAnimationFrame = function(id) {
+        clearTimeout(id);
+      };
+    }
+  }());
+
+  // Wait till the browser is ready to render the game (avoids glitches)
+window.requestAnimationFrame(function () {
+  new GameManager(4, KeyboardInputManager, HTMLActuator, LocalScoreManager);
+});
+function GameManager(size, InputManager, Actuator, ScoreManager) {
+    this.size         = size; // Size of the grid
+    this.inputManager = new InputManager;
+    this.scoreManager = new ScoreManager;
+    this.actuator     = new Actuator;
+  
+    this.startTiles   = 2;
+  
+    this.inputManager.on("move", this.move.bind(this));
+    this.inputManager.on("restart", this.restart.bind(this));
+    this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+  
+    this.setup();
+  }
+  
+  // Restart the game
+  GameManager.prototype.restart = function () {
+    this.actuator.continue();
+    this.setup();
+  };
+  
+  // Keep playing after winning
+  GameManager.prototype.keepPlaying = function () {
+    this.keepPlaying = true;
+    this.actuator.continue();
+  };
+  
+  GameManager.prototype.isGameTerminated = function () {
+    if (this.over || (this.won && !this.keepPlaying)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  
+  // Set up the game
+  GameManager.prototype.setup = function () {
+    this.grid        = new Grid(this.size);
+  
+    this.score       = 0;
+    this.over        = false;
+    this.won         = false;
+    this.keepPlaying = false;
+  
+    // Add the initial tiles
+    this.addStartTiles();
+  
+    // Update the actuator
+    this.actuate();
+  };
+  
+  // Set up the initial tiles to start the game with
+  GameManager.prototype.addStartTiles = function () {
+    for (var i = 0; i < this.startTiles; i++) {
+      this.addRandomTile();
+    }
+  };
+  
+  // Adds a tile in a random position
+  GameManager.prototype.addRandomTile = function () {
+    if (this.grid.cellsAvailable()) {
+      var value = Math.random() < 0.9 ? 2 : 4;
+      var tile = new Tile(this.grid.randomAvailableCell(), value);
+  
+      tile.unstable = 0;
+  
+      this.grid.insertTile(tile);
+    }
+  };
+  
+  // Sends the updated grid to the actuator
+  GameManager.prototype.actuate = function () {
+    if (this.scoreManager.get() < this.score) {
+      this.scoreManager.set(this.score);
+    }
+  
+    this.actuator.actuate(this.grid, {
+      score:      this.score,
+      over:       this.over,
+      won:        this.won,
+      bestScore:  this.scoreManager.get(),
+      terminated: this.isGameTerminated()
+    });
+  
+  };
+  
+  // Save all tile positions and remove merger info
+  GameManager.prototype.prepareTiles = function () {
+    this.grid.eachCell(function (x, y, tile) {
+      if (tile) {
+        tile.mergedFrom = null;
+        tile.savePosition();
+      }
+    });
+  };
+  
+  // Move a tile and its representation
+  GameManager.prototype.moveTile = function (tile, cell) {
+    this.grid.cells[tile.x][tile.y] = null;
+    this.grid.cells[cell.x][cell.y] = tile;
+    tile.updatePosition(cell);
+  };
+  
+  // Move tiles on the grid in the specified direction
+  GameManager.prototype.move = function (direction) {
+    // 0: up, 1: right, 2:down, 3: left
+    var self = this;
+  
+    if (this.isGameTerminated()) return; // Don't do anything if the game's over
+  
+    var cell, tile;
+  
+    var vector     = this.getVector(direction);
+    var traversals = this.buildTraversals(vector);
+    var moved      = false;
+  
+    var exploded = false;
+  
+    // Save the current tile positions and remove merger information
+    this.prepareTiles();
+  
+    // Traverse the grid in the right direction and move tiles
+    traversals.x.forEach(function (x) {
+      traversals.y.forEach(function (y) {
+        cell = { x: x, y: y };
+        tile = self.grid.cellContent(cell);
+  
+        if (tile) {
+          var positions = self.findFarthestPosition(cell, vector);
+          var next      = self.grid.cellContent(positions.next);
+  
+          // Only one merger per row traversal?
+          //if (!tile.isDud) {
+            if (next && next.value === tile.value && !next.mergedFrom) {
+                var merged = new Tile(positions.next, tile.value * 2);
+                merged.mergedFrom = [tile, next];
+  
+                merged.unstable = merged.value === 8
+                               || merged.value === 32
+                               || merged.value === 128
+                               || merged.value > 256 ? (merged.value <= 256 ? merged.value - (merged.value / 4) : 81) : 0;
+  
+                // Update the score
+                self.score += merged.value + (tile.unstable > 0 ? tile.unstable * 2 : 0) + (next.unstable > 0 ? next.unstable * 2 : 0);
+  
+                self.grid.insertTile(merged);
+                self.grid.removeTile(tile);
+  
+                // Converge the two tiles' positions
+                tile.updatePosition(positions.next);
+  
+                // The mighty 2048 tile
+                if (merged.value === 2048) self.won = true;
+            } else {
+              self.moveTile(tile, positions.farthest);
+            }
+          //}
+          /*else {
+            if (tile.value === 0) {
+              self.grid.removeTile(tile);
+                self.score += 200;
+            }
+            else
+              tile.value--;
+          }*/
+  
+          if (!self.positionsEqual(cell, tile)) {
+            moved = true; // The tile moved from its original cell!
+          }
+        }
+      });
+    });
+  
+    if (moved) {
+      var unstableTiles = self.grid.getUnstableTiles(self.grid);
+      for (i = 0; i < unstableTiles.length; i++) {
+          var unstableTile = unstableTiles[i]
+          if (unstableTile.unstable === 1) {
+              unstableTile.unstable = "0";
+              unstableTile.explode = true;
+              exploded = true;
+          }
+          else {
+            unstableTile.unstable--;
+          }
+      }
+      if (exploded) {
+        var exploding = self.grid.getExplodingTiles(self.grid);
+        for (j = 0; j < exploding.length; j++) {
+            self.grid.removeTile(exploding[j]);
+        }
+      }
+  
+      this.addRandomTile();
+  
+      if (!exploded && !this.movesAvailable()) {
+        this.over = true; // Game over!
+      }
+  
+      this.actuate();
+    }
+  };
+  
+  // Get the vector representing the chosen direction
+  GameManager.prototype.getVector = function (direction) {
+    // Vectors representing tile movement
+    var map = {
+      0: { x: 0,  y: -1 }, // up
+      1: { x: 1,  y: 0 },  // right
+      2: { x: 0,  y: 1 },  // down
+      3: { x: -1, y: 0 }   // left
+    };
+  
+    return map[direction];
+  };
+  
+  // Build a list of positions to traverse in the right order
+  GameManager.prototype.buildTraversals = function (vector) {
+    var traversals = { x: [], y: [] };
+  
+    for (var pos = 0; pos < this.size; pos++) {
+      traversals.x.push(pos);
+      traversals.y.push(pos);
+    }
+  
+    // Always traverse from the farthest cell in the chosen direction
+    if (vector.x === 1) traversals.x = traversals.x.reverse();
+    if (vector.y === 1) traversals.y = traversals.y.reverse();
+  
+    return traversals;
+  };
+  
+  GameManager.prototype.findFarthestPosition = function (cell, vector) {
+    var previous;
+  
+    // Progress towards the vector direction until an obstacle is found
+    do {
+      previous = cell;
+      cell     = { x: previous.x + vector.x, y: previous.y + vector.y };
+    } while (this.grid.withinBounds(cell) &&
+             this.grid.cellAvailable(cell));
+  
+    return {
+      farthest: previous,
+      next: cell // Used to check if a merge is required
+    };
+  };
+  
+  GameManager.prototype.movesAvailable = function () {
+    return this.grid.cellsAvailable() || this.tileMatchesAvailable();
+  };
+  
+  // Check for available matches between tiles (more expensive check)
+  GameManager.prototype.tileMatchesAvailable = function () {
+    var self = this;
+  
+    var tile;
+  
+    for (var x = 0; x < this.size; x++) {
+      for (var y = 0; y < this.size; y++) {
+        tile = this.grid.cellContent({ x: x, y: y });
+  
+        if (tile) {
+          for (var direction = 0; direction < 4; direction++) {
+            var vector = self.getVector(direction);
+            var cell   = { x: x + vector.x, y: y + vector.y };
+  
+            var other  = self.grid.cellContent(cell);
+  
+            if (other && other.value === tile.value) {
+              return true; // These two tiles can be merged
+            }
+          }
+        }
+      }
+    }
+  
+    return false;
+  };
+  
+  GameManager.prototype.positionsEqual = function (first, second) {
+    return first.x === second.x && first.y === second.y;
+  };
+
+  function Grid(size) {
+    this.size = size;
+  
+    this.cells = [];
+  
+    this.build();
+  }
+  
+  // Build a grid of the specified size
+  Grid.prototype.build = function () {
+    for (var x = 0; x < this.size; x++) {
+      var row = this.cells[x] = [];
+  
+      for (var y = 0; y < this.size; y++) {
+        row.push(null);
+      }
+    }
+  };
+  
+  // Find the first available random position
+  Grid.prototype.randomAvailableCell = function () {
+    var cells = this.availableCells();
+  
+    if (cells.length) {
+      return cells[Math.floor(Math.random() * cells.length)];
+    }
+  };
+  
+  Grid.prototype.availableCells = function () {
+    var cells = [];
+  
+    this.eachCell(function (x, y, tile) {
+      if (!tile) {
+        cells.push({ x: x, y: y });
+      }
+    });
+  
+    return cells;
+  };
+  
+  // Call callback for every cell
+  Grid.prototype.eachCell = function (callback) {
+    for (var x = 0; x < this.size; x++) {
+      for (var y = 0; y < this.size; y++) {
+        callback(x, y, this.cells[x][y]);
+      }
+    }
+  };
+  
+  // Check if there are any cells available
+  Grid.prototype.cellsAvailable = function () {
+    return !!this.availableCells().length;
+  };
+  
+  // Check if the specified cell is taken
+  Grid.prototype.cellAvailable = function (cell) {
+    return !this.cellOccupied(cell);
+  };
+  
+  Grid.prototype.cellOccupied = function (cell) {
+    return !!this.cellContent(cell);
+  };
+  
+  Grid.prototype.cellContent = function (cell) {
+    if (this.withinBounds(cell)) {
+      return this.cells[cell.x][cell.y];
+    } else {
+      return null;
+    }
+  };
+  
+  Grid.prototype.getUnstableTiles = function(grid) {
+    var cells = [];
+  
+    this.eachCell(function (x, y, tile) {
+      if (tile) {
+        var tileContent = grid.cellContent(tile);
+        if (tileContent.unstable !== 0)
+          cells.push(tileContent);
+      }
+    });
+  
+    return cells;
+  }
+  
+  Grid.prototype.getExplodingTiles = function(grid) {
+    var cells = [];
+  
+    this.eachCell(function (x, y, tile) {
+      if (tile) {
+        var tileContent = grid.cellContent(tile);
+        if (tileContent.explode)
+          cells.push(tileContent);
+      }
+    });
+  
+    return cells;
+  }
+  
+  // Inserts a tile at its position
+  Grid.prototype.insertTile = function (tile) {
+    this.cells[tile.x][tile.y] = tile;
+  };
+  
+  Grid.prototype.removeTile = function (tile) {
+    this.cells[tile.x][tile.y] = null;
+  };
+  
+  Grid.prototype.withinBounds = function (position) {
+    return position.x >= 0 && position.x < this.size &&
+           position.y >= 0 && position.y < this.size;
+  };
+
+  function HTMLActuator() {
+    this.tileContainer    = document.querySelector(".tile-container");
+    this.scoreContainer   = document.querySelector(".score-container");
+    this.bestContainer    = document.querySelector(".best-container");
+    this.messageContainer = document.querySelector(".game-message");
+    this.sharingContainer = document.querySelector(".score-sharing");
+  
+    this.tileCounter    = document.querySelector(".tile-counter");
+    this.previousCounter = { "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0, "256": 0, "512": 0, "1024": 0 };
+    this.counter = { "2": 0, "4": 0, "8": 0, "16": 0, "32": 0, "64": 0, "128": 0, "256": 0, "512": 0, "1024": 0 };
+  
+    this.score = 0;
+  }
+  
+  HTMLActuator.prototype.actuate = function (grid, metadata) {
+    var self = this;
+  
+    window.requestAnimationFrame(function () {
+      self.clearContainer(self.tileContainer);
+  
+      grid.cells.forEach(function (column) {
+        column.forEach(function (cell) {
+          if (cell) {
+            self.addTile(cell);
+          }
+        });
+      });
+  
+      self.updateScore(metadata.score);
+      self.updateBestScore(metadata.bestScore);
+  
+      if (metadata.terminated) {
+        if (metadata.over) {
+          self.message(false); // You lose
+        } else if (metadata.won) {
+          self.message(true); // You win!
+        }
+      }
+  
+      self.updateCounter();
+    });
+  };
+  
+  HTMLActuator.prototype.updateCounter = function() {
+    for (var key in this.counter) {
+      var counter = this.counter[key],
+          previousCounter = this.previousCounter[key],
+          tile;
+  
+      if (counter === 0)
+        return;
+  
+      if (previousCounter === 0) {
+        var wrapper   = document.createElement("div");
+        var inner     = document.createElement("div");
+        var count     = document.createElement("div");
+  
+        inner.innerHTML = this.getElement(key);
+  
+        this.applyClasses(wrapper, ["counter", "tile-"+key]);
+        this.applyClasses(inner, ["element"]);
+        this.applyClasses(count, ["count"]);
+  
+        wrapper.appendChild(inner);
+        wrapper.appendChild(count);
+        this.tileCounter.appendChild(wrapper);
+      }
+  
+      tile = this.tileCounter.querySelector(".tile-"+key);
+      count = tile.querySelector(".count");
+  
+      count.textContent = counter;
+  
+      this.previousCounter[key] = this.counter[key];
+    }
+  }
+  
+  // Continues the game (both restart and keep playing)
+  HTMLActuator.prototype.continue = function () {
+    if (typeof ga !== "undefined") {
+      ga("send", "event", "game", "restart");
+    }
+  
+    this.clearMessage();
+  };
+  
+  HTMLActuator.prototype.clearContainer = function (container) {
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+  };
+  
+  HTMLActuator.prototype.getElement = function(n) {
+      var mass = '<span class="mass">' + n + '</span>';
+  
+      switch (+n) {
+        case 2:
+          return mass + "H";
+        case 4:
+          return mass + "He";
+        case 8:
+          return mass + "Be";
+        case 16:
+          return mass + "O";
+        case 32:
+          return mass + "P";
+        case 64:
+          return mass + "Ni";
+        case 128:
+          return mass + "Sn";
+        case 256:
+          return mass + "No";
+        default:
+          return mass + "?";
+      }
+    }
+  
+  HTMLActuator.prototype.addTile = function (tile) {
+    var self = this;
+  
+    var wrapper   = document.createElement("div");
+    var inner     = document.createElement("div");
+    var position  = tile.previousPosition || { x: tile.x, y: tile.y };
+    var positionClass = this.positionClass(position);
+  
+    // We can't use classlist because it somehow glitches when replacing classes
+    var classes = ["tile", "tile-" + tile.value, positionClass];
+  
+    if (tile.unstable !== 0)
+      classes.push("tile-unstable");
+  
+    if (tile.explode)
+      classes.push("tile-explode");
+  
+    //if (tile.isDud)
+      //classes.push("tile-isDud");
+  
+    if (tile.value > 256) classes.push("tile-super");
+  
+    this.applyClasses(wrapper, classes);
+  
+  
+    inner.classList.add("tile-inner");
+    inner.innerHTML = this.getElement(tile.value) + (tile.unstable || tile.unstable === "0" ? '<span class="count">' + tile.unstable + '</span>'  : '');
+  
+    if (tile.previousPosition) {
+      // Make sure that the tile gets rendered in the previous position first
+      window.requestAnimationFrame(function () {
+        classes[2] = self.positionClass({ x: tile.x, y: tile.y });
+        self.applyClasses(wrapper, classes); // Update the position
+      });
+    } else if (tile.mergedFrom) {
+      classes.push("tile-merged");
+      this.applyClasses(wrapper, classes);
+      this.counter[tile.value]++;
+  
+      // Render the tiles that merged
+      tile.mergedFrom.forEach(function (merged) {
+        self.addTile(merged);
+      });
+    } else {
+      classes.push("tile-new");
+      this.applyClasses(wrapper, classes);
+      this.counter[tile.value]++;
+    }
+  
+    // Add the inner part of the tile to the wrapper
+    wrapper.appendChild(inner);
+  
+    // Put the tile on the board
+    this.tileContainer.appendChild(wrapper);
+  };
+  
+  HTMLActuator.prototype.applyClasses = function (element, classes) {
+    element.setAttribute("class", classes.join(" "));
+  };
+  
+  HTMLActuator.prototype.normalizePosition = function (position) {
+    return { x: position.x + 1, y: position.y + 1 };
+  };
+  
+  HTMLActuator.prototype.positionClass = function (position) {
+    position = this.normalizePosition(position);
+    return "tile-position-" + position.x + "-" + position.y;
+  };
+  
+  HTMLActuator.prototype.updateScore = function (score) {
+    this.clearContainer(this.scoreContainer);
+  
+    var difference = score - this.score;
+    this.score = score;
+  
+    this.scoreContainer.textContent = this.score;
+  
+    if (difference > 0) {
+      var addition = document.createElement("div");
+      addition.classList.add("score-addition");
+      addition.textContent = "+" + difference;
+  
+      this.scoreContainer.appendChild(addition);
+    }
+  };
+  
+  HTMLActuator.prototype.updateBestScore = function (bestScore) {
+    this.bestContainer.textContent = bestScore;
+  };
+  
+  HTMLActuator.prototype.message = function (won) {
+    var type    = won ? "game-won" : "game-over";
+    var message = won ? "You win!" : "Game over!";
+  
+    if (typeof ga !== "undefined") {
+      ga("send", "event", "game", "end", type, this.score);
+    }
+  
+    this.messageContainer.classList.add(type);
+    this.messageContainer.getElementsByTagName("p")[0].textContent = message;
+  
+    this.clearContainer(this.sharingContainer);
+    this.sharingContainer.appendChild(this.scoreTweetButton());
+    twttr.widgets.load();
+  };
+  
+  HTMLActuator.prototype.clearMessage = function () {
+    // IE only takes one value to remove at a time.
+    this.messageContainer.classList.remove("game-won");
+    this.messageContainer.classList.remove("game-over");
+  };
+  
+  HTMLActuator.prototype.scoreTweetButton = function () {
+    var tweet = document.createElement("a");
+    tweet.classList.add("twitter-share-button");
+    tweet.setAttribute("href", "https://twitter.com/share");
+    tweet.setAttribute("data-via", "inb4");
+    tweet.setAttribute("data-url", "http://jamesdonnelly.github.io/Isotopic256");
+    tweet.setAttribute("data-counturl", "http://jamesdonnelly.github.io/Isotopic256");
+    tweet.textContent = "Tweet";
+  
+    var text = "I scored " + this.score + " points at Isotopic 256, a game where you " +
+               "join elements to score high! #isotopic256";
+    tweet.setAttribute("data-text", text);
+  
+    return tweet;
+  };
+
+  function KeyboardInputManager() {
+    this.events = {};
+  
+    this.listen();
+  }
+  
+  KeyboardInputManager.prototype.on = function (event, callback) {
+    if (!this.events[event]) {
+      this.events[event] = [];
+    }
+    this.events[event].push(callback);
+  };
+  
+  KeyboardInputManager.prototype.emit = function (event, data) {
+    var callbacks = this.events[event];
+    if (callbacks) {
+      callbacks.forEach(function (callback) {
+        callback(data);
+      });
+    }
+  };
+  
+  KeyboardInputManager.prototype.listen = function () {
+    var self = this;
+  
+    var map = {
+      38: 0, // Up
+      39: 1, // Right
+      40: 2, // Down
+      37: 3, // Left
+      75: 0, // vim keybindings
+      76: 1,
+      74: 2,
+      72: 3,
+      87: 0, // W
+      68: 1, // D
+      83: 2, // S
+      65: 3  // A
+    };
+  
+    document.addEventListener("keydown", function (event) {
+      var modifiers = event.altKey || event.ctrlKey || event.metaKey ||
+                      event.shiftKey;
+      var mapped    = map[event.which];
+  
+      if (!modifiers) {
+        if (mapped !== undefined) {
+          event.preventDefault();
+          self.emit("move", mapped);
+        }
+  
+        if (event.which === 32) self.restart.bind(self)(event);
+      }
+    });
+  
+    var retry = document.querySelector(".retry-button");
+    retry.addEventListener("click", this.restart.bind(this));
+    retry.addEventListener("touchend", this.restart.bind(this));
+  
+    var keepPlaying = document.querySelector(".keep-playing-button");
+    keepPlaying.addEventListener("click", this.keepPlaying.bind(this));
+    keepPlaying.addEventListener("touchend", this.keepPlaying.bind(this));
+  
+    // Listen to swipe events
+    var touchStartClientX, touchStartClientY;
+    var gameContainer = document.getElementsByClassName("game-container")[0];
+  
+    gameContainer.addEventListener("touchstart", function (event) {
+      if (event.touches.length > 1) return;
+  
+      touchStartClientX = event.touches[0].clientX;
+      touchStartClientY = event.touches[0].clientY;
+      event.preventDefault();
+    });
+  
+    gameContainer.addEventListener("touchmove", function (event) {
+      event.preventDefault();
+    });
+  
+    gameContainer.addEventListener("touchend", function (event) {
+      if (event.touches.length > 0) return;
+  
+      var dx = event.changedTouches[0].clientX - touchStartClientX;
+      var absDx = Math.abs(dx);
+  
+      var dy = event.changedTouches[0].clientY - touchStartClientY;
+      var absDy = Math.abs(dy);
+  
+      if (Math.max(absDx, absDy) > 10) {
+        // (right : left) : (down : up)
+        self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+      }
+    });
+  };
+  
+  KeyboardInputManager.prototype.restart = function (event) {
+    event.preventDefault();
+    this.emit("restart");
+  };
+  
+  KeyboardInputManager.prototype.keepPlaying = function (event) {
+    event.preventDefault();
+    this.emit("keepPlaying");
+  };
+  window.fakeStorage = {
+    _data: {},
+  
+    setItem: function (id, val) {
+      return this._data[id] = String(val);
+    },
+  
+    getItem: function (id) {
+      return this._data.hasOwnProperty(id) ? this._data[id] : undefined;
+    },
+  
+    removeItem: function (id) {
+      return delete this._data[id];
+    },
+  
+    clear: function () {
+      return this._data = {};
+    }
+  };
+  
+  function LocalScoreManager() {
+    this.key     = "bestScore";
+  
+    var supported = this.localStorageSupported();
+    this.storage = supported ? window.localStorage : window.fakeStorage;
+  }
+  
+  LocalScoreManager.prototype.localStorageSupported = function () {
+    var testKey = "test";
+    var storage = window.localStorage;
+  
+    try {
+      storage.setItem(testKey, "1");
+      storage.removeItem(testKey);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+  
+  LocalScoreManager.prototype.get = function () {
+    return this.storage.getItem(this.key) || 0;
+  };
+  
+  LocalScoreManager.prototype.set = function (score) {
+    this.storage.setItem(this.key, score);
+  };
+  
+  function Tile(position, value) {
+    this.x                = position.x;
+    this.y                = position.y;
+    this.value            = value || 2;
+  
+    this.previousPosition = null;
+    this.mergedFrom       = null; // Tracks tiles that merged together
+  }
+  
+  Tile.prototype.savePosition = function () {
+    this.previousPosition = { x: this.x, y: this.y };
+  };
+  
+  Tile.prototype.updatePosition = function (position) {
+    this.x = position.x;
+    this.y = position.y;
+  };
+
+  // Exponent
+// From: https://github.com/Team-Sass/Sassy-math/blob/master/sass/math.scss#L36
+
+@function exponent($base, $exponent) {
+  // reset value
+  $value: $base;
+  // positive intergers get multiplied
+  @if $exponent > 1 {
+    @for $i from 2 through $exponent {
+      $value: $value * $base; } }
+  // negitive intergers get divided. A number divided by itself is 1
+  @if $exponent < 1 {
+    @for $i from 0 through -$exponent {
+      $value: $value / $base; } }
+  // return the last value written
+  @return $value;
+}
+
+@function pow($base, $exponent) {
+  @return exponent($base, $exponent);
+}
+
+// Transition mixins
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  transition: $args;
+}
+
+@mixin transition-property($args...) {
+  -webkit-transition-property: $args;
+  -moz-transition-property: $args;
+  transition-property: $args;
+}
+
+@mixin animation($args...) {
+  -webkit-animation: $args;
+  -moz-animation: $args;
+  animation: $args;
+}
+
+@mixin animation-fill-mode($args...) {
+  -webkit-animation-fill-mode: $args;
+  -moz-animation-fill-mode: $args;
+  animation-fill-mode: $args;
+}
+
+@mixin transform($args...) {
+  -webkit-transform: $args;
+  -moz-transform: $args;
+  transform: $args;
+}
+
+// Keyframe animations
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes $animation-name {
+    @content;
+  }
+  @-moz-keyframes $animation-name {
+    @content;
+  }
+  @keyframes $animation-name {
+    @content;
+  }
+}
+
+// Media queries
+@mixin smaller($width) {
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}
+
+// Appearance
+@mixin appearance($args...) {
+  -webkit-appearance: $args;
+  -moz-appearance: $args;
+  appearance: $args;
+}
+
+@import url(fonts/clear-sans.css);
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #faf8ef;
+  color: #776e65;
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px; }
+
+body {
+  margin: 80px 0; }
+
+ins {
+  margin: 40px 100px 0 100px;
+}
+
+.heading {
+  margin-bottom: 20px;
+}
+
+.heading:after {
+  content: "";
+  display: block;
+  clear: both; }
+
+h1.title {
+  font-size: 80px;
+  font-weight: bold;
+  margin: 0;
+  display: block;
+  float: left; }
+
+@-webkit-keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+
+@-moz-keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+
+@keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+
+.scores-container {
+  float: right;
+  text-align: right; }
+
+.score-container, .best-container {
+  position: relative;
+  display: inline-block;
+  background: #bbada0;
+  padding: 15px 25px;
+  font-size: 25px;
+  height: 25px;
+  line-height: 47px;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  margin-top: 8px;
+  text-align: center; }
+  .score-container:after, .best-container:after {
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    left: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    color: #eee4da; }
+  .score-container .score-addition, .best-container .score-addition {
+    position: absolute;
+    right: 30px;
+    color: red;
+    font-size: 25px;
+    line-height: 25px;
+    font-weight: bold;
+    color: rgba(119, 110, 101, 0.9);
+    z-index: 100;
+    -webkit-animation: move-up 600ms ease-in;
+    -moz-animation: move-up 600ms ease-in;
+    animation: move-up 600ms ease-in;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+
+.score-container:after {
+  content: "Score"; }
+
+.best-container:after {
+  content: "Best"; }
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  line-height: 1.65; }
+
+a {
+  color: #776e65;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer; }
+
+strong.important {
+  text-transform: uppercase; }
+
+hr {
+  border: none;
+  border-bottom: 1px solid #d8d4d0;
+  margin-top: 20px;
+  margin-bottom: 30px; }
+
+.container {
+  width: 500px;
+  margin: 0 auto; }
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+@-moz-keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+
+.tile-counter {
+  background: transparent;
+  border-radius: 6px;
+  margin: 20px auto 0 auto;
+  width: 378px;
+  padding: 10px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.tile-counter .counter {
+  display: inline-block;
+  margin: 4px;
+  width: 80px;
+}
+
+.tile-counter .counter .count {
+  display: inline-block;
+  color: #333;
+  margin-left: 5px;
+  width: 41px;
+  text-align: center;
+}
+
+.tile-counter .counter .element {
+  box-shadow: none;
+  border-radius: 100%;
+  width: 32px;
+  height: 32px;
+  line-height: 28px;
+  text-align: center;
+  display: inline-block;
+}
+
+.tile-counter .counter .element .mass {
+    vertical-align: super;
+    font-size: 10px;
+}
+
+.tile-counter .tile-32 .element,
+.tile-counter .tile-64 .element {
+    font-size: 12px;
+}
+
+.tile-counter .tile-32 .element .mass,
+.tile-counter .tile-64 .element .mass,
+.tile-counter .tile-128 .element .mass,
+.tile-counter .tile-256 .element .mass {
+    font-size: 8px;
+}
+
+.tile-counter .tile-128 .element .mass,
+.tile-counter .tile-256 .element .mass {
+    font-size: 6px;
+}
+
+.game-container {
+  margin: 40px auto 0 auto;
+  position: relative;
+  padding: 15px;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  background: #bbada0;
+  border-radius: 6px;
+  width: 500px;
+  height: 500px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  .game-container .game-message {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(238, 228, 218, 0.5);
+    z-index: 100;
+    text-align: center;
+    -webkit-animation: fade-in 800ms ease 1200ms;
+    -moz-animation: fade-in 800ms ease 1200ms;
+    animation: fade-in 800ms ease 1200ms;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+    .game-container .game-message p {
+      font-size: 60px;
+      font-weight: bold;
+      height: 60px;
+      line-height: 60px;
+      margin-top: 100px; }
+    .game-container .game-message .lower {
+      display: block;
+      margin-top: 59px; }
+    .game-container .game-message a {
+      display: inline-block;
+      background: #8f7a66;
+      border-radius: 3px;
+      padding: 0 20px;
+      text-decoration: none;
+      color: #f9f6f2;
+      height: 40px;
+      line-height: 42px;
+      margin-left: 9px; }
+      .game-container .game-message a.keep-playing-button {
+        display: none; }
+    .game-container .game-message .score-sharing {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+      display: block;
+      margin-top: 20px; }
+    .game-container .game-message.game-won {
+      background: rgba(237, 194, 46, 0.5);
+      color: #f9f6f2; }
+      .game-container .game-message.game-won a.keep-playing-button {
+        display: inline-block; }
+    .game-container .game-message.game-won, .game-container .game-message.game-over {
+      display: block; }
+      .fb-like.fb_iframe_widget {
+        display: block;
+        margin: 5px;
+      }
+
+.grid-container {
+  position: absolute;
+  z-index: 1; }
+
+.grid-row {
+  margin-bottom: 15px; }
+  .grid-row:last-child {
+    margin-bottom: 0; }
+  .grid-row:after {
+    content: "";
+    display: block;
+    clear: both; }
+
+.grid-cell {
+  width: 106.25px;
+  height: 106.25px;
+  margin-right: 15px;
+  float: left;
+  border-radius: 100%;
+  background: rgba(238, 228, 218, 0.35); }
+  .grid-cell:last-child {
+    margin-right: 0; }
+
+.tile-container {
+  position: absolute;
+  z-index: 2; }
+
+.tile, .tile .tile-inner {
+  width: 107px;
+  height: 107px;
+  line-height: 99px; }
+.tile.tile-position-1-1 {
+  -webkit-transform: translate(0px, 0px);
+  -moz-transform: translate(0px, 0px);
+  transform: translate(0px, 0px); }
+.tile.tile-position-1-2 {
+  -webkit-transform: translate(0px, 121px);
+  -moz-transform: translate(0px, 121px);
+  transform: translate(0px, 121px); }
+.tile.tile-position-1-3 {
+  -webkit-transform: translate(0px, 242px);
+  -moz-transform: translate(0px, 242px);
+  transform: translate(0px, 242px); }
+.tile.tile-position-1-4 {
+  -webkit-transform: translate(0px, 363px);
+  -moz-transform: translate(0px, 363px);
+  transform: translate(0px, 363px); }
+.tile.tile-position-2-1 {
+  -webkit-transform: translate(121px, 0px);
+  -moz-transform: translate(121px, 0px);
+  transform: translate(121px, 0px); }
+.tile.tile-position-2-2 {
+  -webkit-transform: translate(121px, 121px);
+  -moz-transform: translate(121px, 121px);
+  transform: translate(121px, 121px); }
+.tile.tile-position-2-3 {
+  -webkit-transform: translate(121px, 242px);
+  -moz-transform: translate(121px, 242px);
+  transform: translate(121px, 242px); }
+.tile.tile-position-2-4 {
+  -webkit-transform: translate(121px, 363px);
+  -moz-transform: translate(121px, 363px);
+  transform: translate(121px, 363px); }
+.tile.tile-position-3-1 {
+  -webkit-transform: translate(242px, 0px);
+  -moz-transform: translate(242px, 0px);
+  transform: translate(242px, 0px); }
+.tile.tile-position-3-2 {
+  -webkit-transform: translate(242px, 121px);
+  -moz-transform: translate(242px, 121px);
+  transform: translate(242px, 121px); }
+.tile.tile-position-3-3 {
+  -webkit-transform: translate(242px, 242px);
+  -moz-transform: translate(242px, 242px);
+  transform: translate(242px, 242px); }
+.tile.tile-position-3-4 {
+  -webkit-transform: translate(242px, 363px);
+  -moz-transform: translate(242px, 363px);
+  transform: translate(242px, 363px); }
+.tile.tile-position-4-1 {
+  -webkit-transform: translate(363px, 0px);
+  -moz-transform: translate(363px, 0px);
+  transform: translate(363px, 0px); }
+.tile.tile-position-4-2 {
+  -webkit-transform: translate(363px, 121px);
+  -moz-transform: translate(363px, 121px);
+  transform: translate(363px, 121px); }
+.tile.tile-position-4-3 {
+  -webkit-transform: translate(363px, 242px);
+  -moz-transform: translate(363px, 242px);
+  transform: translate(363px, 242px); }
+.tile.tile-position-4-4 {
+  -webkit-transform: translate(363px, 363px);
+  -moz-transform: translate(363px, 363px);
+  transform: translate(363px, 363px); }
+
+.tile {
+  position: absolute;
+  -webkit-transition: 100ms ease-in-out;
+  -moz-transition: 100ms ease-in-out;
+  transition: 100ms ease-in-out;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform; }
+  .tile .tile-inner {
+    border-radius: 100%;
+    background: #eee4da;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    font-size: 55px; }
+    @-webkit-keyframes explode {
+      from {opacity: 1; visibility: visible;}
+      to {opacity: 0; visibility: hidden;}
+    }
+
+    @-moz-keyframes explode {
+      from {opacity: 1; visibility: visible;}
+      to {opacity: 0; visibility: hidden;}
+    }
+    .tile.tile-unstable.tile-explode .tile-inner {
+      -webkit-animation-name: explode; 
+      -webkit-animation-duration: 0.5s; 
+      -webkit-transition-property: -webkit-transform;
+      -webkit-transition-duration: 1s;
+      -webkit-animation-iteration-count: 1;
+      -webkit-animation-timing-function: ease;
+
+      -moz-animation-name: explode; 
+      -moz-animation-duration: 0.5s; 
+      -moz-transition-property: -moz-transform;
+      -moz-transition-duration: 1s;
+      -moz-animation-iteration-count: 1;
+      -moz-animation-timing-function: ease;
+
+      visibility: hidden;
+    }
+    @-webkit-keyframes shake {
+      from {width: 115px; height:115px; margin-left: -4px; margin-top: -4px;}
+      to {width: 107px; height: 107px; margin-left: 0; margin-top: 0;}
+    }
+
+    @-moz-keyframes shake {
+      from {width: 115px; height:115px; margin-top: -4px; margin-left: -4px;}
+      to {width: 107px; height: 107px; margin-top: 0; margin-left: 0;}
+    }
+  .tile.tile-unstable .tile-inner {
+    -webkit-animation-name: shake; 
+    -webkit-animation-duration: 0.1s; 
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+
+    -moz-animation-name: shake; 
+    -moz-animation-duration: 0.1s; 
+    -moz-transition-property: -moz-transform;
+    -moz-transition-duration: 1s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+  }
+  .tile .tile-inner span.mass {
+    vertical-align: super;
+    font-size: 30px;
+  }
+    @-webkit-keyframes count {
+      from {opacity: 1; visibility: visible;}
+      to {opacity: 0; visibility: hidden;}
+    }
+
+    @-moz-keyframes count {
+      from {opacity: 1; visibility: visible;}
+      to {opacity: 0; visibility: hidden;}
+    }
+  .tile .tile-inner span.count {
+      -webkit-animation-name: count; 
+      -webkit-animation-duration: 1s; 
+      -webkit-transition-property: -webkit-transform;
+      -webkit-transition-duration: 1s;
+      -webkit-animation-iteration-count: 1;
+      -webkit-animation-timing-function: ease;
+
+      -moz-animation-name: count; 
+      -moz-animation-duration: 1s; 
+      -moz-transition-property: -moz-transform;
+      -moz-transition-duration: 1s;
+      -moz-animation-iteration-count: 1;
+      -moz-animation-timing-function: ease;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 107px;
+    height: 107px;
+    line-height: 186px;
+    display: block;
+    font-size: 30px;
+    color: #fafafa;
+    color: rgba(255, 255, 255, 0.85);
+    visibility: hidden;
+  }
+  .tile-2 .element,
+  .tile.tile-2 .tile-inner {
+    background: #eee4da;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); }
+  .tile-4 .element,
+  .tile.tile-4 .tile-inner {
+    background: #ede0c8;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); }
+  .tile-8 .element,
+  .tile.tile-8 .tile-inner {
+    color: #f9f6f2;
+    background: #f2b179; }
+  .tile-16 .element,
+  .tile.tile-16 .tile-inner {
+    color: #f9f6f2;
+    background: #f59563;
+    box-shadow: 0 0 30px 10px #F2B179, inset 0 0 0 1px rgba(255, 255, 255, 0.2381); }
+  .tile.tile-16 .tile-inner,
+  .tile.tile-32 .tile-inner,
+  .tile.tile-64 .tile-inner {
+    font-size: 45px; }
+  .tile.tile-16 .tile-inner span.mass,
+  .tile.tile-32 .tile-inner span.mass,
+  .tile.tile-64 .tile-inner span.mass {
+    font-size: 25px; }
+  .tile-32 .element,
+  .tile.tile-32 .tile-inner {
+    color: #f9f6f2;
+    background: #f67c5f;  }
+  .tile-64 .element,
+  .tile.tile-64 .tile-inner {
+    color: #f9f6f2;
+    background: #f65e3b;
+    box-shadow: 0 0 30px 10px #f67c5f, inset 0 0 0 1px rgba(255, 255, 255, 0.2381); }
+  .tile.tile-128 .tile-inner,
+  .tile.tile-256 .tile-inner,
+  .tile.tile-super .tile-inner {
+    font-size: 40px; }
+  .tile.tile-128 .tile-inner span.mass,
+  .tile.tile-256 .tile-inner span.mass,
+  .tile.tile-super .tile-inner span.mass {
+    font-size: 20px; }
+  .tile-128 .element,
+  .tile.tile-128 .tile-inner {
+    color: #f9f6f2;
+    background: #edcf72;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.2381), inset 0 0 0 1px rgba(255, 255, 255, 0.14286); }
+    @media screen and (max-width: 520px) {
+      .tile.tile-128 .tile-inner {
+        font-size: 25px; } }
+  .tile-256 .element,
+  .tile.tile-256 .tile-inner {
+    color: #f9f6f2;
+    background: #edcc61;
+    box-shadow: 0 0 30px 10px #edcf72, inset 0 0 0 1px rgba(255, 255, 255, 0.2381); }
+    @media screen and (max-width: 520px) {
+      .tile.tile-256 .tile-inner {
+        font-size: 25px; } }
+  .tile-512 .element,
+  .tile-1024 .element,
+  .tile.tile-super .tile-inner {
+    color: #f9f6f2;
+    background: #3c3a32;
+    box-shadow: 0 0 30px 10px #edcf72, inset 0 0 0 1px rgba(255, 255, 255, 0.2381); }
+    @media screen and (max-width: 520px) {
+      .tile.tile-super .tile-inner {
+        font-size: 10px; } }
+
+@-webkit-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@-moz-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+.tile-new .tile-inner {
+  -webkit-animation: appear 200ms ease 100ms;
+  -moz-animation: appear 200ms ease 100ms;
+  animation: appear 200ms ease 100ms;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-fill-mode: backwards;
+  animation-fill-mode: backwards; }
+
+@-webkit-keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.8);
+    -moz-transform: scale(1.8);
+    transform: scale(1.8); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@-moz-keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.8);
+    -moz-transform: scale(1.8);
+    transform: scale(1.8); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.8);
+    -moz-transform: scale(1.8);
+    transform: scale(1.8); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+.tile-merged .tile-inner {
+  z-index: 20;
+  -webkit-animation: pop 200ms ease 100ms;
+  -moz-animation: pop 200ms ease 100ms;
+  animation: pop 200ms ease 100ms;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-fill-mode: backwards;
+  animation-fill-mode: backwards; }
+
+.game-intro {
+  margin-bottom: 0; }
+
+.game-explanation {
+  margin-top: 50px; }
+
+.sharing {
+  margin-top: 20px;
+  text-align: center; }
+  .sharing > iframe, .sharing > span, .sharing > form {
+    display: inline-block;
+    vertical-align: middle; }
+
+@media screen and (max-width: 520px) {
+
+    @-webkit-keyframes shake {
+      from {width: 87px; height:87px; margin-left: -4px; margin-top: -4px;}
+      to {width: 79px; height: 79px; margin-left: 0; margin-top: 0;}
+    }
+
+    @-moz-keyframes shake {
+      from {width: 87px; height:87px; margin-top: -4px; margin-left: -4px;}
+      to {width: 79px; height: 79px; margin-top: 0; margin-left: 0;}
+    }
+
+
+  .tile.tile-unstable .tile-inner {
+    -webkit-animation-name: shake; 
+    -webkit-animation-duration: 0.1s; 
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+
+    -moz-animation-name: shake; 
+    -moz-animation-duration: 0.1s; 
+    -moz-transition-property: -moz-transform;
+    -moz-transition-duration: 1s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+  }
+
+  html, body {
+    font-size: 15px; }
+
+  body {
+    margin: 20px 0;
+    padding: 0 20px; }
+
+  h1.title {
+    font-size: 27px;
+    margin-top: 15px; }
+
+  .container {
+    width: 280px;
+    margin: 0 auto; }
+
+  .score-container, .best-container {
+    margin-top: 0;
+    padding: 15px 10px;
+    min-width: 40px; }
+
+  .heading {
+    margin-bottom: 10px; }
+
+    .tile-counter {
+      width: 280px;
+    }
+
+  .game-container {
+    margin-top: 40px;
+    position: relative;
+    padding: 10px;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    background: #bbada0;
+    border-radius: 6px;
+    width: 500px;
+    height: 500px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    .game-container .game-message {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(238, 228, 218, 0.5);
+      z-index: 100;
+      text-align: center;
+      -webkit-animation: fade-in 800ms ease 1200ms;
+      -moz-animation: fade-in 800ms ease 1200ms;
+      animation: fade-in 800ms ease 1200ms;
+      -webkit-animation-fill-mode: both;
+      -moz-animation-fill-mode: both;
+      animation-fill-mode: both; }
+      .game-container .game-message p {
+        font-size: 60px;
+        font-weight: bold;
+        height: 60px;
+        line-height: 60px;
+        margin-top: 100px; }
+      .game-container .game-message .lower {
+        display: block;
+        margin-top: 59px; }
+      .game-container .game-message a {
+        display: inline-block;
+        background: #8f7a66;
+        border-radius: 3px;
+        padding: 0 20px;
+        text-decoration: none;
+        color: #f9f6f2;
+        height: 40px;
+        line-height: 42px;
+        margin-left: 9px; }
+        .game-container .game-message a.keep-playing-button {
+          display: none; }
+      .game-container .game-message .score-sharing {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px;
+        display: block;
+        margin-top: 20px; }
+      .game-container .game-message.game-won {
+        background: rgba(237, 194, 46, 0.5);
+        color: #f9f6f2; }
+        .game-container .game-message.game-won a.keep-playing-button {
+          display: inline-block; }
+      .game-container .game-message.game-won, .game-container .game-message.game-over {
+        display: block; }
+
+  .grid-container {
+    position: absolute;
+    z-index: 1; }
+
+  .grid-row {
+    margin-bottom: 10px; }
+    .grid-row:last-child {
+      margin-bottom: 0; }
+    .grid-row:after {
+      content: "";
+      display: block;
+      clear: both; }
+
+  .grid-cell {
+    width: 79.5px;
+    height: 79.5px;
+    margin-right: 10px;
+    float: left;
+    border-radius: 100%;
+    background: rgba(238, 228, 218, 0.35); }
+    .grid-cell:last-child {
+      margin-right: 0; }
+
+  .tile-container {
+    position: absolute;
+    z-index: 2; }
+
+  .tile, .tile .tile-inner {
+    width: 79px;
+    height: 79px;
+    line-height: 75.5px; }
+.tile.tile-position-1-1 {
+  -webkit-transform: translate(0px, 0px);
+  -moz-transform: translate(0px, 0px);
+  -ms-transform: translate(0px, 0px);
+  transform: translate(0px, 0px); }
+.tile.tile-position-1-2 {
+  -webkit-transform: translate(0px, 121px);
+  -moz-transform: translate(0px, 121px);
+  -ms-transform: translate(0px, 121px);
+  transform: translate(0px, 121px); }
+.tile.tile-position-1-3 {
+  -webkit-transform: translate(0px, 242px);
+  -moz-transform: translate(0px, 242px);
+  -ms-transform: translate(0px, 242px);
+  transform: translate(0px, 242px); }
+.tile.tile-position-1-4 {
+  -webkit-transform: translate(0px, 363px);
+  -moz-transform: translate(0px, 363px);
+  -ms-transform: translate(0px, 363px);
+  transform: translate(0px, 363px); }
+.tile.tile-position-2-1 {
+  -webkit-transform: translate(121px, 0px);
+  -moz-transform: translate(121px, 0px);
+  -ms-transform: translate(121px, 0px);
+  transform: translate(121px, 0px); }
+.tile.tile-position-2-2 {
+  -webkit-transform: translate(121px, 121px);
+  -moz-transform: translate(121px, 121px);
+  -ms-transform: translate(121px, 121px);
+  transform: translate(121px, 121px); }
+.tile.tile-position-2-3 {
+  -webkit-transform: translate(121px, 242px);
+  -moz-transform: translate(121px, 242px);
+  -ms-transform: translate(121px, 242px);
+  transform: translate(121px, 242px); }
+.tile.tile-position-2-4 {
+  -webkit-transform: translate(121px, 363px);
+  -moz-transform: translate(121px, 363px);
+  -ms-transform: translate(121px, 363px);
+  transform: translate(121px, 363px); }
+.tile.tile-position-3-1 {
+  -webkit-transform: translate(242px, 0px);
+  -moz-transform: translate(242px, 0px);
+  -ms-transform: translate(242px, 0px);
+  transform: translate(242px, 0px); }
+.tile.tile-position-3-2 {
+  -webkit-transform: translate(242px, 121px);
+  -moz-transform: translate(242px, 121px);
+  -ms-transform: translate(242px, 121px);
+  transform: translate(242px, 121px); }
+.tile.tile-position-3-3 {
+  -webkit-transform: translate(242px, 242px);
+  -moz-transform: translate(242px, 242px);
+  -ms-transform: translate(242px, 242px);
+  transform: translate(242px, 242px); }
+.tile.tile-position-3-4 {
+  -webkit-transform: translate(242px, 363px);
+  -moz-transform: translate(242px, 363px);
+  -ms-transform: translate(242px, 363px);
+  transform: translate(242px, 363px); }
+.tile.tile-position-4-1 {
+  -webkit-transform: translate(363px, 0px);
+  -moz-transform: translate(363px, 0px);
+  -ms-transform: translate(363px, 0px);
+  transform: translate(363px, 0px); }
+.tile.tile-position-4-2 {
+  -webkit-transform: translate(363px, 121px);
+  -moz-transform: translate(363px, 121px);
+  -ms-transform: translate(363px, 121px);
+  transform: translate(363px, 121px); }
+.tile.tile-position-4-3 {
+  -webkit-transform: translate(363px, 242px);
+  -moz-transform: translate(363px, 242px);
+  -ms-transform: translate(363px, 242px);
+  transform: translate(363px, 242px); }
+.tile.tile-position-4-4 {
+  -webkit-transform: translate(363px, 363px);
+  -moz-transform: translate(363px, 363px);
+  -ms-transform: translate(363px, 363px);
+  transform: translate(363px, 363px); }
+
+  .tile .tile-inner span.count {
+    font-size: 20px;
+    height: 79px;
+    line-height: 138px;
+    width: 79px;
+  }
+
+  .tile .tile-inner span.mass {
+    font-size: 25px;
+  }
+
+  .tile.tile-16 .tile-inner span.mass, .tile.tile-32 .tile-inner span.mass, .tile.tile-64 .tile-inner span.mass {
+    font-size: 18px;
+  }
+
+  .tile.tile-16 .tile-inner, .tile.tile-32 .tile-inner, .tile.tile-64 .tile-inner {
+    font-size: 35px;
+  }
+
+  .game-container {
+    margin-top: 20px; }
+
+  .tile .tile-inner {
+    font-size: 35px; }
+
+  .game-message p {
+    font-size: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    margin-top: 90px !important; }
+  .game-message .lower {
+    margin-top: 30px !important; }
+
+  .sharing > iframe, .sharing > span, .sharing > form {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px; } }
+.pp-donate button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: inline-block;
+  background: #8f7a66;
+  border-radius: 3px;
+  padding: 0 20px;
+  text-decoration: none;
+  color: #f9f6f2;
+  height: 40px;
+  line-height: 42px; }
+  .pp-donate button img {
+    vertical-align: -4px;
+    margin-right: 8px; }
+
+.btc-donate {
+  position: relative;
+  margin-left: 10px;
+  display: inline-block;
+  background: #8f7a66;
+  border-radius: 3px;
+  padding: 0 20px;
+  text-decoration: none;
+  color: #f9f6f2;
+  height: 40px;
+  line-height: 42px;
+  cursor: pointer; }
+  .btc-donate img {
+    vertical-align: -4px;
+    margin-right: 8px; }
+  .btc-donate a {
+    color: #f9f6f2;
+    text-decoration: none;
+    font-weight: normal; }
+  .btc-donate .address {
+    cursor: auto;
+    position: absolute;
+    width: 340px;
+    right: 50%;
+    margin-right: -170px;
+    padding-bottom: 7px;
+    top: -30px;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: 400ms ease;
+    -moz-transition: 400ms ease;
+    transition: 400ms ease;
+    -webkit-transition-property: top, opacity;
+    -moz-transition-property: top, opacity;
+    transition-property: top, opacity; }
+    .btc-donate .address:after {
+      position: absolute;
+      border-top: 10px solid #bbada0;
+      border-right: 7px solid transparent;
+      border-left: 7px solid transparent;
+      content: "";
+      bottom: 0px;
+      left: 50%;
+      margin-left: -7px; }
+    .btc-donate .address code {
+      background-color: #bbada0;
+      padding: 10px 15px;
+      width: 100%;
+      border-radius: 3px;
+      line-height: 1;
+      font-weight: normal;
+      font-size: 15px;
+      font-family: Consolas, "Liberation Mono", Courier, monospace;
+      text-align: center; }
+  .btc-donate:hover .address, .btc-donate .address:hover .address {
+    opacity: 1;
+    top: -45px;
+    pointer-events: auto; }
+  @media screen and (max-width: 480px) {
+    .btc-donate {
+      width: 120px; }
+      .btc-donate .address {
+        margin-right: -150px;
+        width: 300px; }
+        .btc-donate .address code {
+          font-size: 13px; }
+        .btc-donate .address:after {
+          left: 50%;
+          bottom: 2px; } }
+
+
+/*@import url(fonts/clear-sans.css);
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #faf8ef;
+  color: #776e65;
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px; }
+
+body {
+  margin: 80px 0; }
+
+.heading:after {
+  content: "";
+  display: block;
+  clear: both; }
+
+h1.title {
+  font-size: 80px;
+  font-weight: bold;
+  margin: 0;
+  display: block;
+  float: left; }
+
+@-webkit-keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+
+@-moz-keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+
+@keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+
+.scores-container {
+  float: right;
+  text-align: right; }
+
+.score-container, .best-container {
+  position: relative;
+  display: inline-block;
+  background: #bbada0;
+  padding: 15px 25px;
+  font-size: 25px;
+  height: 25px;
+  line-height: 47px;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  margin-top: 8px;
+  text-align: center; }
+  .score-container:after, .best-container:after {
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    left: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    color: #eee4da; }
+  .score-container .score-addition, .best-container .score-addition {
+    position: absolute;
+    right: 30px;
+    color: red;
+    font-size: 25px;
+    line-height: 25px;
+    font-weight: bold;
+    color: rgba(119, 110, 101, 0.9);
+    z-index: 100;
+    -webkit-animation: move-up 600ms ease-in;
+    -moz-animation: move-up 600ms ease-in;
+    animation: move-up 600ms ease-in;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+
+.score-container:after {
+  content: "Score"; }
+
+.best-container:after {
+  content: "Best"; }
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  line-height: 1.65; }
+
+a {
+  color: #776e65;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer; }
+
+strong.important {
+  text-transform: uppercase; }
+
+hr {
+  border: none;
+  border-bottom: 1px solid #d8d4d0;
+  margin-top: 20px;
+  margin-bottom: 30px; }
+
+.container {
+  width: 500px;
+  margin: 0 auto; }
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+@-moz-keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+.game-container {
+  margin: 40px auto 0 auto;
+  position: relative;
+  padding: 15px;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  background: #bbada0;
+  border-radius: 6px;
+  width: 500px;
+  height: 500px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  .game-container .game-message {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(238, 228, 218, 0.5);
+    z-index: 100;
+    text-align: center;
+    -webkit-animation: fade-in 800ms ease 1200ms;
+    -moz-animation: fade-in 800ms ease 1200ms;
+    animation: fade-in 800ms ease 1200ms;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+    .game-container .game-message p {
+      font-size: 60px;
+      font-weight: bold;
+      height: 60px;
+      line-height: 60px;
+      margin-top: 100px; }
+    .game-container .game-message .lower {
+      display: block;
+      margin-top: 59px; }
+    .game-container .game-message a {
+      display: inline-block;
+      background: #8f7a66;
+      border-radius: 3px;
+      padding: 0 20px;
+      text-decoration: none;
+      color: #f9f6f2;
+      height: 40px;
+      line-height: 42px;
+      margin-left: 9px; }
+      .game-container .game-message a.keep-playing-button {
+        display: none; }
+    .game-container .game-message .score-sharing {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px; }
+    .game-container .game-message.game-won {
+      background: rgba(237, 194, 46, 0.5);
+      color: #f9f6f2; }
+      .game-container .game-message.game-won a.keep-playing-button {
+        display: inline-block; }
+    .game-container .game-message.game-won, .game-container .game-message.game-over {
+      display: block; }
+
+.grid-container {
+  position: absolute;
+  z-index: 1; }
+
+.grid-row {
+  margin-bottom: 15px; }
+  .grid-row:last-child {
+    margin-bottom: 0; }
+  .grid-row:after {
+    content: "";
+    display: block;
+    clear: both; }
+
+.grid-cell {
+  width: 107px;
+  height: 107px;
+  margin-right: 15px;
+  float: left;
+  border-radius: 3px;
+  background: rgba(238, 228, 218, 0.35); }
+  .grid-cell:last-child {
+    margin-right: 0; }
+
+.tile-container {
+  position: absolute;
+  z-index: 2; }
+
+.tile, .tile .tile-inner {
+  width: 107px;
+  height: 107px;
+  line-height: 103px; }
+/*.tile.tile-position-1-1 {
+  -webkit-transform: translate(0px, 0px);
+  -moz-transform: translate(0px, 0px);
+  transform: translate(0px, 0px); }
+.tile.tile-position-1-2 {
+  -webkit-transform: translate(0px, 60px);
+  -moz-transform: translate(0px, 60px);
+  transform: translate(0px, 60px); }
+.tile.tile-position-1-3 {
+  -webkit-transform: translate(0px, 120px);
+  -moz-transform: translate(0px, 120px);
+  transform: translate(0px, 120px); }
+.tile.tile-position-1-4 {
+  -webkit-transform: translate(0px, 180px);
+  -moz-transform: translate(0px, 180px);
+  transform: translate(0px, 180px); }
+.tile.tile-position-1-5 {
+  -webkit-transform: translate(0px, 240px);
+  -moz-transform: translate(0px, 240px);
+  transform: translate(0px, 240px); }
+.tile.tile-position-1-6 {
+  -webkit-transform: translate(0px, 300px);
+  -moz-transform: translate(0px, 300px);
+  transform: translate(0px, 300px); }
+.tile.tile-position-1-7 {
+  -webkit-transform: translate(0px, 360px);
+  -moz-transform: translate(0px, 360px);
+  transform: translate(0px, 360px); }
+.tile.tile-position-1-8 {
+  -webkit-transform: translate(0px, 420px);
+  -moz-transform: translate(0px, 420px);
+  transform: translate(0px, 420px); }
+.tile.tile-position-2-1 {
+  -webkit-transform: translate(60px, 0px);
+  -moz-transform: translate(60px, 0px);
+  transform: translate(60px, 0px); }
+.tile.tile-position-2-2 {
+  -webkit-transform: translate(60px, 60px);
+  -moz-transform: translate(60px, 60px);
+  transform: translate(60px, 60px); }
+.tile.tile-position-2-3 {
+  -webkit-transform: translate(60px, 120px);
+  -moz-transform: translate(60px, 120px);
+  transform: translate(60px, 120px); }
+.tile.tile-position-2-4 {
+  -webkit-transform: translate(60px, 180px);
+  -moz-transform: translate(60px, 180px);
+  transform: translate(60px, 180px); }
+.tile.tile-position-2-5 {
+  -webkit-transform: translate(60px, 240px);
+  -moz-transform: translate(60px, 240px);
+  transform: translate(60px, 240px); }
+.tile.tile-position-2-6 {
+  -webkit-transform: translate(60px, 300px);
+  -moz-transform: translate(60px, 300px);
+  transform: translate(60px, 300px); }
+.tile.tile-position-2-7 {
+  -webkit-transform: translate(60px, 360px);
+  -moz-transform: translate(60px, 360px);
+  transform: translate(60px, 360px); }
+.tile.tile-position-2-8 {
+  -webkit-transform: translate(60px, 420px);
+  -moz-transform: translate(60px, 420px);
+  transform: translate(60px, 420px); }
+.tile.tile-position-3-1 {
+  -webkit-transform: translate(120px, 0px);
+  -moz-transform: translate(120px, 0px);
+  transform: translate(120px, 0px); }
+.tile.tile-position-3-2 {
+  -webkit-transform: translate(120px, 60px);
+  -moz-transform: translate(120px, 60px);
+  transform: translate(120px, 60px); }
+.tile.tile-position-3-3 {
+  -webkit-transform: translate(120px, 120px);
+  -moz-transform: translate(120px, 120px);
+  transform: translate(120px, 120px); }
+.tile.tile-position-3-4 {
+  -webkit-transform: translate(120px, 180px);
+  -moz-transform: translate(120px, 180px);
+  transform: translate(120px, 180px); }
+.tile.tile-position-3-5 {
+  -webkit-transform: translate(120px, 240px);
+  -moz-transform: translate(120px, 240px);
+  transform: translate(120px, 240px); }
+.tile.tile-position-3-6 {
+  -webkit-transform: translate(120px, 300px);
+  -moz-transform: translate(120px, 300px);
+  transform: translate(120px, 300px); }
+.tile.tile-position-3-7 {
+  -webkit-transform: translate(120px, 360px);
+  -moz-transform: translate(120px, 360px);
+  transform: translate(120px, 360px); }
+.tile.tile-position-3-8 {
+  -webkit-transform: translate(120px, 420px);
+  -moz-transform: translate(120px, 420px);
+  transform: translate(120px, 420px); }
+.tile.tile-position-4-1 {
+  -webkit-transform: translate(180px, 0px);
+  -moz-transform: translate(180px, 0px);
+  transform: translate(180px, 0px); }
+.tile.tile-position-4-2 {
+  -webkit-transform: translate(180px, 60px);
+  -moz-transform: translate(180px, 60px);
+  transform: translate(180px, 60px); }
+.tile.tile-position-4-3 {
+  -webkit-transform: translate(180px, 120px);
+  -moz-transform: translate(180px, 120px);
+  transform: translate(180px, 120px); }
+.tile.tile-position-4-4 {
+  -webkit-transform: translate(180px, 180px);
+  -moz-transform: translate(180px, 180px);
+  transform: translate(180px, 180px); }
+.tile.tile-position-4-5 {
+  -webkit-transform: translate(180px, 240px);
+  -moz-transform: translate(180px, 240px);
+  transform: translate(180px, 240px); }
+.tile.tile-position-4-6 {
+  -webkit-transform: translate(180px, 300px);
+  -moz-transform: translate(180px, 300px);
+  transform: translate(180px, 300px); }
+.tile.tile-position-4-7 {
+  -webkit-transform: translate(180px, 360px);
+  -moz-transform: translate(180px, 360px);
+  transform: translate(180px, 360px); }
+.tile.tile-position-4-8 {
+  -webkit-transform: translate(180px, 420px);
+  -moz-transform: translate(180px, 420px);
+  transform: translate(180px, 420px); }
+.tile.tile-position-5-1 {
+  -webkit-transform: translate(240px, 0px);
+  -moz-transform: translate(240px, 0px);
+  transform: translate(240px, 0px); }
+.tile.tile-position-5-2 {
+  -webkit-transform: translate(240px, 60px);
+  -moz-transform: translate(240px, 60px);
+  transform: translate(240px, 60px); }
+.tile.tile-position-5-3 {
+  -webkit-transform: translate(240px, 120px);
+  -moz-transform: translate(240px, 120px);
+  transform: translate(240px, 120px); }
+.tile.tile-position-5-4 {
+  -webkit-transform: translate(240px, 180px);
+  -moz-transform: translate(240px, 180px);
+  transform: translate(240px, 180px); }
+.tile.tile-position-5-5 {
+  -webkit-transform: translate(240px, 240px);
+  -moz-transform: translate(240px, 240px);
+  transform: translate(240px, 240px); }
+.tile.tile-position-5-6 {
+  -webkit-transform: translate(240px, 300px);
+  -moz-transform: translate(240px, 300px);
+  transform: translate(240px, 300px); }
+.tile.tile-position-5-7 {
+  -webkit-transform: translate(240px, 360px);
+  -moz-transform: translate(240px, 360px);
+  transform: translate(240px, 360px); }
+.tile.tile-position-5-8 {
+  -webkit-transform: translate(240px, 420px);
+  -moz-transform: translate(240px, 420px);
+  transform: translate(240px, 420px); }
+.tile.tile-position-6-1 {
+  -webkit-transform: translate(300px, 0px);
+  -moz-transform: translate(300px, 0px);
+  transform: translate(300px, 0px); }
+.tile.tile-position-6-2 {
+  -webkit-transform: translate(300px, 60px);
+  -moz-transform: translate(300px, 60px);
+  transform: translate(300px, 60px); }
+.tile.tile-position-6-3 {
+  -webkit-transform: translate(300px, 120px);
+  -moz-transform: translate(300px, 120px);
+  transform: translate(300px, 120px); }
+.tile.tile-position-6-4 {
+  -webkit-transform: translate(300px, 180px);
+  -moz-transform: translate(300px, 180px);
+  transform: translate(300px, 180px); }
+.tile.tile-position-6-5 {
+  -webkit-transform: translate(300px, 240px);
+  -moz-transform: translate(300px, 240px);
+  transform: translate(300px, 240px); }
+.tile.tile-position-6-6 {
+  -webkit-transform: translate(300px, 300px);
+  -moz-transform: translate(300px, 300px);
+  transform: translate(300px, 300px); }
+.tile.tile-position-6-7 {
+  -webkit-transform: translate(300px, 360px);
+  -moz-transform: translate(300px, 360px);
+  transform: translate(300px, 360px); }
+.tile.tile-position-6-8 {
+  -webkit-transform: translate(300px, 420px);
+  -moz-transform: translate(300px, 420px);
+  transform: translate(300px, 420px); }
+.tile.tile-position-7-1 {
+  -webkit-transform: translate(360px, 0px);
+  -moz-transform: translate(360px, 0px);
+  transform: translate(360px, 0px); }
+.tile.tile-position-7-2 {
+  -webkit-transform: translate(360px, 60px);
+  -moz-transform: translate(360px, 60px);
+  transform: translate(360px, 60px); }
+.tile.tile-position-7-3 {
+  -webkit-transform: translate(360px, 120px);
+  -moz-transform: translate(360px, 120px);
+  transform: translate(360px, 120px); }
+.tile.tile-position-7-4 {
+  -webkit-transform: translate(360px, 180px);
+  -moz-transform: translate(360px, 180px);
+  transform: translate(360px, 180px); }
+.tile.tile-position-7-5 {
+  -webkit-transform: translate(360px, 240px);
+  -moz-transform: translate(360px, 240px);
+  transform: translate(360px, 240px); }
+.tile.tile-position-7-6 {
+  -webkit-transform: translate(360px, 300px);
+  -moz-transform: translate(360px, 300px);
+  transform: translate(360px, 300px); }
+.tile.tile-position-7-7 {
+  -webkit-transform: translate(360px, 360px);
+  -moz-transform: translate(360px, 360px);
+  transform: translate(360px, 360px); }
+.tile.tile-position-7-8 {
+  -webkit-transform: translate(360px, 420px);
+  -moz-transform: translate(360px, 420px);
+  transform: translate(360px, 420px); }
+.tile.tile-position-8-1 {
+  -webkit-transform: translate(420px, 0px);
+  -moz-transform: translate(420px, 0px);
+  transform: translate(420px, 0px); }
+.tile.tile-position-8-2 {
+  -webkit-transform: translate(420px, 60px);
+  -moz-transform: translate(420px, 60px);
+  transform: translate(420px, 60px); }
+.tile.tile-position-8-3 {
+  -webkit-transform: translate(420px, 120px);
+  -moz-transform: translate(420px, 120px);
+  transform: translate(420px, 120px); }
+.tile.tile-position-8-4 {
+  -webkit-transform: translate(420px, 180px);
+  -moz-transform: translate(420px, 180px);
+  transform: translate(420px, 180px); }
+.tile.tile-position-8-5 {
+  -webkit-transform: translate(420px, 240px);
+  -moz-transform: translate(420px, 240px);
+  transform: translate(420px, 240px); }
+.tile.tile-position-8-6 {
+  -webkit-transform: translate(420px, 300px);
+  -moz-transform: translate(420px, 300px);
+  transform: translate(420px, 300px); }
+.tile.tile-position-8-7 {
+  -webkit-transform: translate(420px, 360px);
+  -moz-transform: translate(420px, 360px);
+  transform: translate(420px, 360px); }
+.tile.tile-position-8-8 {
+  -webkit-transform: translate(420px, 420px);
+  -moz-transform: translate(420px, 420px);
+  transform: translate(420px, 420px); }*/
+/*.tile, .tile .tile-inner {
+  width: 107px;
+  height: 107px;
+  line-height: 116.25px; }
+.tile.tile-position-1-1 {
+  -webkit-transform: translate(0px, 0px);
+  -moz-transform: translate(0px, 0px);
+  transform: translate(0px, 0px); }
+.tile.tile-position-1-2 {
+  -webkit-transform: translate(0px, 121px);
+  -moz-transform: translate(0px, 121px);
+  transform: translate(0px, 121px); }
+.tile.tile-position-1-3 {
+  -webkit-transform: translate(0px, 242px);
+  -moz-transform: translate(0px, 242px);
+  transform: translate(0px, 242px); }
+.tile.tile-position-1-4 {
+  -webkit-transform: translate(0px, 363px);
+  -moz-transform: translate(0px, 363px);
+  transform: translate(0px, 363px); }
+.tile.tile-position-2-1 {
+  -webkit-transform: translate(121px, 0px);
+  -moz-transform: translate(121px, 0px);
+  transform: translate(121px, 0px); }
+.tile.tile-position-2-2 {
+  -webkit-transform: translate(121px, 121px);
+  -moz-transform: translate(121px, 121px);
+  transform: translate(121px, 121px); }
+.tile.tile-position-2-3 {
+  -webkit-transform: translate(121px, 242px);
+  -moz-transform: translate(121px, 242px);
+  transform: translate(121px, 242px); }
+.tile.tile-position-2-4 {
+  -webkit-transform: translate(121px, 363px);
+  -moz-transform: translate(121px, 363px);
+  transform: translate(121px, 363px); }
+.tile.tile-position-3-1 {
+  -webkit-transform: translate(242px, 0px);
+  -moz-transform: translate(242px, 0px);
+  transform: translate(242px, 0px); }
+.tile.tile-position-3-2 {
+  -webkit-transform: translate(242px, 121px);
+  -moz-transform: translate(242px, 121px);
+  transform: translate(242px, 121px); }
+.tile.tile-position-3-3 {
+  -webkit-transform: translate(242px, 242px);
+  -moz-transform: translate(242px, 242px);
+  transform: translate(242px, 242px); }
+.tile.tile-position-3-4 {
+  -webkit-transform: translate(242px, 363px);
+  -moz-transform: translate(242px, 363px);
+  transform: translate(242px, 363px); }
+.tile.tile-position-4-1 {
+  -webkit-transform: translate(363px, 0px);
+  -moz-transform: translate(363px, 0px);
+  transform: translate(363px, 0px); }
+.tile.tile-position-4-2 {
+  -webkit-transform: translate(363px, 121px);
+  -moz-transform: translate(363px, 121px);
+  transform: translate(363px, 121px); }
+.tile.tile-position-4-3 {
+  -webkit-transform: translate(363px, 242px);
+  -moz-transform: translate(363px, 242px);
+  transform: translate(363px, 242px); }
+.tile.tile-position-4-4 {
+  -webkit-transform: translate(363px, 363px);
+  -moz-transform: translate(363px, 363px);
+  transform: translate(363px, 363px); }
+.tile {
+  position: absolute;
+  -webkit-transition: 100ms ease-in-out;
+  -moz-transition: 100ms ease-in-out;
+  transition: 100ms ease-in-out;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform; }
+  .tile .tile-inner {
+    border-radius: 3px;
+    background: #eee4da;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    font-size: 25px; }
+  .tile .tile-inner span {
+    font-size: 15px;
+    vertical-align: super;
+     }
+  .tile.tile-isDud .tile-inner {
+    background: #C7B299 !important;
+    color: #814432 !important;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
+    font-size: 45px !important; }
+   .tile.tile-2 .tile-inner {
+    background: #eee4da;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); }
+  .tile.tile-4 .tile-inner {
+    background: #ede0c8;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); }
+  .tile.tile-8 .tile-inner {
+    color: #f9f6f2;
+    background: #f2b179; }
+  .tile.tile-16 .tile-inner {
+    color: #f9f6f2;
+    background: #f59563; }
+  .tile.tile-32 .tile-inner {
+    color: #f9f6f2;
+    background: #f67c5f; }
+  .tile.tile-64 .tile-inner {
+    color: #f9f6f2;
+    background: #f65e3b; }
+  .tile.tile-128 .tile-inner {
+    color: #f9f6f2;
+    background: #edcf72;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.2381), inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+    font-size: 45px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-128 .tile-inner {
+        font-size: 25px; } }
+  .tile.tile-256 .tile-inner {
+    color: #f9f6f2;
+    background: #edcc61;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746), inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+    font-size: 45px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-256 .tile-inner {
+        font-size: 25px; } }
+  .tile.tile-512 .tile-inner {
+    color: #f9f6f2;
+    background: #edc850;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683), inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+    font-size: 45px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-512 .tile-inner {
+        font-size: 25px; } }
+  .tile.tile-1024 .tile-inner {
+    color: #f9f6f2;
+    background: #edc53f;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.47619), inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+    font-size: 35px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-1024 .tile-inner {
+        font-size: 15px; } }
+  .tile.tile-2048 .tile-inner {
+    color: #f9f6f2;
+    background: #edc22e;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 35px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-2048 .tile-inner {
+        font-size: 15px; } }
+  .tile.tile-super .tile-inner {
+    color: #f9f6f2;
+    background: #3c3a32;
+    font-size: 30px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-super .tile-inner {
+        font-size: 10px; } }
+
+@-webkit-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@-moz-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+.tile-new .tile-inner {
+  -webkit-animation: appear 200ms ease 100ms;
+  -moz-animation: appear 200ms ease 100ms;
+  animation: appear 200ms ease 100ms;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-fill-mode: backwards;
+  animation-fill-mode: backwards; }
+
+@-webkit-keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.8);
+    -moz-transform: scale(1.8);
+    transform: scale(1.8); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@-moz-keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.8);
+    -moz-transform: scale(1.8);
+    transform: scale(1.8); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.8);
+    -moz-transform: scale(1.8);
+    transform: scale(1.8); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+.tile-merged .tile-inner {
+  z-index: 20;
+  -webkit-animation: pop 200ms ease 100ms;
+  -moz-animation: pop 200ms ease 100ms;
+  animation: pop 200ms ease 100ms;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-fill-mode: backwards;
+  animation-fill-mode: backwards; }
+
+.game-intro {
+  margin-bottom: 0; }
+
+.game-explanation {
+  margin-top: 50px; }
+
+.sharing {
+  margin-top: 20px;
+  text-align: center; }
+  .sharing > iframe, .sharing > span, .sharing > form {
+    display: inline-block;
+    vertical-align: middle; }
+
+@media screen and (max-width: 520px) {
+  html, body {
+    font-size: 15px; }
+
+  body {
+    margin: 20px 0;
+    padding: 0 20px; }
+
+  h1.title {
+    font-size: 27px;
+    margin-top: 15px; }
+
+  .container {
+    width: 280px;
+    margin: 0 auto; }
+
+  .score-container, .best-container {
+    margin-top: 0;
+    padding: 15px 10px;
+    min-width: 40px; }
+
+  .heading {
+    margin-bottom: 10px; }
+
+  .game-container {
+    margin-top: 40px;
+    position: relative;
+    padding: 10px;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    background: #bbada0;
+    border-radius: 6px;
+    width: 280px;
+    height: 280px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    .game-container .game-message {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(238, 228, 218, 0.5);
+      z-index: 100;
+      text-align: center;
+      -webkit-animation: fade-in 800ms ease 1200ms;
+      -moz-animation: fade-in 800ms ease 1200ms;
+      animation: fade-in 800ms ease 1200ms;
+      -webkit-animation-fill-mode: both;
+      -moz-animation-fill-mode: both;
+      animation-fill-mode: both; }
+      .game-container .game-message p {
+        font-size: 60px;
+        font-weight: bold;
+        height: 60px;
+        line-height: 60px;
+        margin-top: 100px; }
+      .game-container .game-message .lower {
+        display: block;
+        margin-top: 59px; }
+      .game-container .game-message a {
+        display: inline-block;
+        background: #8f7a66;
+        border-radius: 3px;
+        padding: 0 20px;
+        text-decoration: none;
+        color: #f9f6f2;
+        height: 40px;
+        line-height: 42px;
+        margin-left: 9px; }
+        .game-container .game-message a.keep-playing-button {
+          display: none; }
+      .game-container .game-message .score-sharing {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px; }
+      .game-container .game-message.game-won {
+        background: rgba(237, 194, 46, 0.5);
+        color: #f9f6f2; }
+        .game-container .game-message.game-won a.keep-playing-button {
+          display: inline-block; }
+      .game-container .game-message.game-won, .game-container .game-message.game-over {
+        display: block; }
+
+  .grid-container {
+    position: absolute;
+    z-index: 1; }
+
+  .grid-row {
+    margin-bottom: 15px; }
+    .grid-row:last-child {
+      margin-bottom: 0; }
+    .grid-row:after {
+      content: "";
+      display: block;
+      clear: both; }
+
+  .grid-cell {
+    width: 57.5px;
+    height: 57.5px;
+    margin-right: 15px;
+    float: left;
+    border-radius: 3px;
+    background: rgba(238, 228, 218, 0.35); }
+    .grid-cell:last-child {
+      margin-right: 0; }
+
+  .tile-container {
+    position: absolute;
+    z-index: 2; }
+
+  .tile, .tile .tile-inner {
+    width: 58px;
+    height: 58px;
+    line-height: 67.5px; }
+  .tile.tile-position-1-1 {
+    -webkit-transform: translate(0px, 0px);
+    -moz-transform: translate(0px, 0px);
+    transform: translate(0px, 0px); }
+  .tile.tile-position-1-2 {
+    -webkit-transform: translate(0px, 67px);
+    -moz-transform: translate(0px, 67px);
+    transform: translate(0px, 67px); }
+  .tile.tile-position-1-3 {
+    -webkit-transform: translate(0px, 135px);
+    -moz-transform: translate(0px, 135px);
+    transform: translate(0px, 135px); }
+  .tile.tile-position-1-4 {
+    -webkit-transform: translate(0px, 202px);
+    -moz-transform: translate(0px, 202px);
+    transform: translate(0px, 202px); }
+  .tile.tile-position-2-1 {
+    -webkit-transform: translate(67px, 0px);
+    -moz-transform: translate(67px, 0px);
+    transform: translate(67px, 0px); }
+  .tile.tile-position-2-2 {
+    -webkit-transform: translate(67px, 67px);
+    -moz-transform: translate(67px, 67px);
+    transform: translate(67px, 67px); }
+  .tile.tile-position-2-3 {
+    -webkit-transform: translate(67px, 135px);
+    -moz-transform: translate(67px, 135px);
+    transform: translate(67px, 135px); }
+  .tile.tile-position-2-4 {
+    -webkit-transform: translate(67px, 202px);
+    -moz-transform: translate(67px, 202px);
+    transform: translate(67px, 202px); }
+  .tile.tile-position-3-1 {
+    -webkit-transform: translate(135px, 0px);
+    -moz-transform: translate(135px, 0px);
+    transform: translate(135px, 0px); }
+  .tile.tile-position-3-2 {
+    -webkit-transform: translate(135px, 67px);
+    -moz-transform: translate(135px, 67px);
+    transform: translate(135px, 67px); }
+  .tile.tile-position-3-3 {
+    -webkit-transform: translate(135px, 135px);
+    -moz-transform: translate(135px, 135px);
+    transform: translate(135px, 135px); }
+  .tile.tile-position-3-4 {
+    -webkit-transform: translate(135px, 202px);
+    -moz-transform: translate(135px, 202px);
+    transform: translate(135px, 202px); }
+  .tile.tile-position-4-1 {
+    -webkit-transform: translate(202px, 0px);
+    -moz-transform: translate(202px, 0px);
+    transform: translate(202px, 0px); }
+  .tile.tile-position-4-2 {
+    -webkit-transform: translate(202px, 67px);
+    -moz-transform: translate(202px, 67px);
+    transform: translate(202px, 67px); }
+  .tile.tile-position-4-3 {
+    -webkit-transform: translate(202px, 135px);
+    -moz-transform: translate(202px, 135px);
+    transform: translate(202px, 135px); }
+  .tile.tile-position-4-4 {
+    -webkit-transform: translate(202px, 202px);
+    -moz-transform: translate(202px, 202px);
+    transform: translate(202px, 202px); }
+
+  .game-container {
+    margin-top: 20px; }
+
+  .tile .tile-inner {
+    font-size: 35px; }
+
+  .game-message p {
+    font-size: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    margin-top: 90px !important; }
+  .game-message .lower {
+    margin-top: 30px !important; }
+
+  .sharing > iframe, .sharing > span, .sharing > form {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px; } }
+.pp-donate button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: inline-block;
+  background: #8f7a66;
+  border-radius: 3px;
+  padding: 0 20px;
+  text-decoration: none;
+  color: #f9f6f2;
+  height: 40px;
+  line-height: 42px; }
+  .pp-donate button img {
+    vertical-align: -4px;
+    margin-right: 8px; }
+
+.btc-donate {
+  position: relative;
+  margin-left: 10px;
+  display: inline-block;
+  background: #8f7a66;
+  border-radius: 3px;
+  padding: 0 20px;
+  text-decoration: none;
+  color: #f9f6f2;
+  height: 40px;
+  line-height: 42px;
+  cursor: pointer; }
+  .btc-donate img {
+    vertical-align: -4px;
+    margin-right: 8px; }
+  .btc-donate a {
+    color: #f9f6f2;
+    text-decoration: none;
+    font-weight: normal; }
+  .btc-donate .address {
+    cursor: auto;
+    position: absolute;
+    width: 340px;
+    right: 50%;
+    margin-right: -170px;
+    padding-bottom: 7px;
+    top: -30px;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: 400ms ease;
+    -moz-transition: 400ms ease;
+    transition: 400ms ease;
+    -webkit-transition-property: top, opacity;
+    -moz-transition-property: top, opacity;
+    transition-property: top, opacity; }
+    .btc-donate .address:after {
+      position: absolute;
+      border-top: 10px solid #bbada0;
+      border-right: 7px solid transparent;
+      border-left: 7px solid transparent;
+      content: "";
+      bottom: 0px;
+      left: 50%;
+      margin-left: -7px; }
+    .btc-donate .address code {
+      background-color: #bbada0;
+      padding: 10px 15px;
+      width: 100%;
+      border-radius: 3px;
+      line-height: 1;
+      font-weight: normal;
+      font-size: 15px;
+      font-family: Consolas, "Liberation Mono", Courier, monospace;
+      text-align: center; }
+  .btc-donate:hover .address, .btc-donate .address:hover .address {
+    opacity: 1;
+    top: -45px;
+    pointer-events: auto; }
+  @media screen and (max-width: 480px) {
+    .btc-donate {
+      width: 120px; }
+      .btc-donate .address {
+        margin-right: -150px;
+        width: 300px; }
+        .btc-donate .address code {
+          font-size: 13px; }
+        .btc-donate .address:after {
+          left: 50%;
+          bottom: 2px; } }
+*/
+
+@import "helpers";
+@import "fonts/clear-sans.css";
+
+$field-width: 500px;
+$grid-spacing: 15px;
+$grid-row-cells: 4;
+$tile-size: ($field-width - $grid-spacing * ($grid-row-cells + 1)) / $grid-row-cells;
+$tile-border-radius: 3px;
+
+$mobile-threshold: $field-width + 20px;
+
+$text-color: #776E65;
+$bright-text-color: #f9f6f2;
+
+$tile-color: #eee4da;
+$tile-gold-color: #edc22e;
+$tile-gold-glow-color: lighten($tile-gold-color, 15%);
+
+$game-container-background: #bbada0;
+
+$transition-speed: 100ms;
+
+html, body {
+  margin: 0;
+  padding: 0;
+
+  background: #faf8ef;
+  color: $text-color;
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+}
+
+body {
+  margin: 80px 0;
+}
+
+.heading:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+h1.title {
+  font-size: 80px;
+  font-weight: bold;
+  margin: 0;
+  display: block;
+  float: left;
+}
+
+@include keyframes(move-up) {
+  0% {
+    top: 25px;
+    opacity: 1;
+  }
+
+  100% {
+    top: -50px;
+    opacity: 0;
+  }
+}
+
+.scores-container {
+  float: right;
+  text-align: right;
+}
+
+.score-container, .best-container {
+  $height: 25px;
+
+  position: relative;
+  display: inline-block;
+  background: $game-container-background;
+  padding: 15px 25px;
+  font-size: $height;
+  height: $height;
+  line-height: $height + 22px;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  margin-top: 8px;
+  text-align: center;
+
+  &:after {
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    left: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    color: $tile-color;
+  }
+
+  .score-addition {
+    position: absolute;
+    right: 30px;
+    color: red;
+    font-size: $height;
+    line-height: $height;
+    font-weight: bold;
+    color: rgba($text-color, .9);
+    z-index: 100;
+    @include animation(move-up 600ms ease-in);
+    @include animation-fill-mode(both);
+  }
+}
+
+.score-container:after {
+  content: "Score";
+}
+
+.best-container:after {
+  content: "Best"
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  line-height: 1.65;
+}
+
+a {
+  color: $text-color;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+strong {
+  &.important {
+    text-transform: uppercase;
+  }
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid lighten($text-color, 40%);
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.container {
+  width: $field-width;
+  margin: 0 auto;
+}
+
+@include keyframes(fade-in) {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+// Styles for buttons
+@mixin button {
+  display: inline-block;
+  background: darken($game-container-background, 20%);
+  border-radius: 3px;
+  padding: 0 20px;
+  text-decoration: none;
+  color: $bright-text-color;
+  height: 40px;
+  line-height: 42px;
+}
+
+// Game field mixin used to render CSS at different width
+@mixin game-field {
+  .game-container {
+    margin-top: 40px;
+    position: relative;
+    padding: $grid-spacing;
+
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+
+    background: $game-container-background;
+    border-radius: $tile-border-radius * 2;
+    width: $field-width;
+    height: $field-width;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    .game-message {
+      display: none;
+
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba($tile-color, .5);
+      z-index: 100;
+
+      text-align: center;
+
+      p {
+        font-size: 60px;
+        font-weight: bold;
+        height: 60px;
+        line-height: 60px;
+        margin-top: 222px;
+        // height: $field-width;
+        // line-height: $field-width;
+      }
+
+      .lower {
+        display: block;
+        margin-top: 59px;
+      }
+
+      a {
+        @include button;
+        margin-left: 9px;
+        // margin-top: 59px;
+
+	&.keep-playing-button {
+	  display: none;
+	}
+      }
+
+      .score-sharing {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px;
+      }
+
+      @include animation(fade-in 800ms ease $transition-speed * 12);
+      @include animation-fill-mode(both);
+
+      &.game-won {
+        background: rgba($tile-gold-color, .5);
+        color: $bright-text-color;
+
+	a.keep-playing-button {
+	  display: inline-block;
+	}
+      }
+
+      &.game-won, &.game-over {
+        display: block;
+      }
+    }
+  }
+
+  .grid-container {
+    position: absolute;
+    z-index: 1;
+  }
+
+  .grid-row {
+    margin-bottom: $grid-spacing;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+
+  .grid-cell {
+    width: $tile-size;
+    height: $tile-size;
+    margin-right: $grid-spacing;
+    float: left;
+
+    border-radius: $tile-border-radius;
+
+    background: rgba($tile-color, .35);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .tile-container {
+    position: absolute;
+    z-index: 2;
+  }
+
+  .tile {
+    &, .tile-inner {
+      width: ceil($tile-size);
+      height: ceil($tile-size);
+      line-height: $tile-size + 10px;
+    }
+
+    // Build position classes
+    @for $x from 1 through $grid-row-cells {
+      @for $y from 1 through $grid-row-cells {
+        &.tile-position-#{$x}-#{$y} {
+          $xPos: floor(($tile-size + $grid-spacing) * ($x - 1));
+          $yPos: floor(($tile-size + $grid-spacing) * ($y - 1));
+          @include transform(translate($xPos, $yPos));
+        }
+      }
+    }
+  }
+}
+
+// End of game-field mixin
+@include game-field;
+
+.tile {
+  position: absolute; // Makes transforms relative to the top-left corner
+
+  .tile-inner {
+    border-radius: $tile-border-radius;
+
+    background: $tile-color;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+
+    font-size: 55px;
+  }
+
+  // Movement transition
+  @include transition($transition-speed ease-in-out);
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform;
+
+  $base: 2;
+  $exponent: 1;
+  $limit: 11;
+
+  // Colors for all 11 states, false = no special color
+  $special-colors: false false, // 2
+                   false false, // 4
+                   #f78e48 true, // 8
+                   #fc5e2e true, // 16
+                   #ff3333 true, // 32
+                   #ff0000 true, // 64
+                   false true, // 128
+                   false true, // 256
+                   false true, // 512
+                   false true, // 1024
+                   false true; // 2048
+
+  // Build tile colors
+  @while $exponent <= $limit {
+    $power: pow($base, $exponent);
+
+    &.tile-#{$power} .tile-inner {
+      // Calculate base background color
+      $gold-percent: ($exponent - 1) / ($limit - 1) * 100;
+      $mixed-background: mix($tile-gold-color, $tile-color, $gold-percent);
+
+      $nth-color: nth($special-colors, $exponent);
+
+      $special-background: nth($nth-color, 1);
+      $bright-color: nth($nth-color, 2);
+
+      @if $special-background {
+        $mixed-background: mix($special-background, $mixed-background, 55%);
+      }
+
+      @if $bright-color {
+        color: $bright-text-color;
+      }
+
+      // Set background
+      background: $mixed-background;
+
+      // Add glow
+      $glow-opacity: max($exponent - 4, 0) / ($limit - 4);
+
+      @if not $special-background {
+        box-shadow: 0 0 30px 10px rgba($tile-gold-glow-color, $glow-opacity / 1.8),
+                    inset 0 0 0 1px rgba(white, $glow-opacity / 3);
+      }
+
+      // Adjust font size for bigger numbers
+      @if $power >= 100 and $power < 1000 {
+        font-size: 45px;
+
+        // Media queries placed here to avoid carrying over the rest of the logic
+        @include smaller($mobile-threshold) {
+          font-size: 25px;
+        }
+      } @else if $power >= 1000 {
+        font-size: 35px;
+
+        @include smaller($mobile-threshold) {
+          font-size: 15px;
+        }
+      }
+    }
+
+    $exponent: $exponent + 1;
+  }
+
+  // Super tiles (above 2048)
+  &.tile-super .tile-inner {
+    color: $bright-text-color;
+    background: mix(#333, $tile-gold-color, 95%);
+
+    font-size: 30px;
+
+    @include smaller($mobile-threshold) {
+      font-size: 10px;
+    }
+  }
+}
+
+@include keyframes(appear) {
+  0% {
+    opacity: 0;
+    @include transform(scale(0));
+  }
+
+  100% {
+    opacity: 1;
+    @include transform(scale(1));
+  }
+}
+
+.tile-new .tile-inner {
+  @include animation(appear 200ms ease $transition-speed);
+  @include animation-fill-mode(backwards);
+}
+
+@include keyframes(pop) {
+  0% {
+    @include transform(scale(0));
+  }
+
+  50% {
+    @include transform(scale(1.2));
+  }
+
+  100% {
+    @include transform(scale(1));
+  }
+}
+
+.tile-merged .tile-inner {
+  z-index: 20;
+  @include animation(pop 200ms ease $transition-speed);
+  @include animation-fill-mode(backwards);
+}
+
+.game-intro {
+  margin-bottom: 0;
+}
+
+.game-explanation {
+  margin-top: 50px;
+}
+
+.sharing {
+  margin-top: 20px;
+  text-align: center;
+
+  > iframe, > span, > form {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+@include smaller($mobile-threshold) {
+  // Redefine variables for smaller screens
+  $field-width: 280px;
+  $grid-spacing: 10px;
+  $grid-row-cells: 4;
+  $tile-size: ($field-width - $grid-spacing * ($grid-row-cells + 1)) / $grid-row-cells;
+  $tile-border-radius: 3px;
+
+  html, body {
+    font-size: 15px;
+  }
+
+  body {
+    margin: 20px 0;
+    padding: 0 20px;
+  }
+
+  h1.title {
+    font-size: 27px;
+    margin-top: 15px;
+  }
+
+  .container {
+    width: $field-width;
+    margin: 0 auto;
+  }
+
+  .score-container, .best-container {
+    margin-top: 0;
+    padding: 15px 10px;
+    min-width: 40px;
+  }
+
+  .heading {
+    margin-bottom: 10px;
+  }
+
+  // Render the game field at the right width
+  @include game-field;
+
+  .game-container {
+    margin-top: 20px;
+  }
+
+  // Rest of the font-size adjustments in the tile class
+  .tile .tile-inner {
+    font-size: 35px;
+  }
+
+  .game-message {
+    p {
+      font-size: 30px !important;
+      height: 30px !important;
+      line-height: 30px !important;
+      margin-top: 90px !important;
+    }
+
+    .lower {
+      margin-top: 30px !important;
+    }
+  }
+
+  .sharing {
+    > iframe, > span, > form {
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+// PP Donate button
+.pp-donate {
+  button {
+    @include appearance(none);
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    @include button;
+
+    img {
+      vertical-align: -4px;
+      margin-right: 8px;
+    }
+  }
+}
+
+// Bitcoin donate button
+.btc-donate {
+  // font-size: 14px;
+  position: relative;
+  margin-left: 10px;
+  @include button;
+  cursor: pointer;
+
+  img {
+    vertical-align: -4px;
+    margin-right: 8px;
+  }
+
+  a {
+    color: $bright-text-color;
+    text-decoration: none;
+    font-weight: normal;
+  }
+
+  .address {
+    // display: none;
+    cursor: auto;
+    position: absolute;
+    // background: red;
+    width: 340px;
+    right: 50%;
+    margin-right: -170px;
+
+    padding-bottom: 7px;
+
+    top: -30px;
+    opacity: 0;
+    pointer-events: none;
+    @include transition(400ms ease);
+    @include transition-property(top, opacity);
+
+    &:after {
+      position: absolute;
+      border-top: 10px solid $game-container-background;
+      border-right: 7px solid transparent;
+      border-left: 7px solid transparent;
+      content: "";
+      bottom: 0px;
+      left: 50%;
+      margin-left: -7px;
+    }
+
+    code {
+      background-color: $game-container-background;
+      padding: 10px 15px;
+      width: 100%;
+      border-radius: 3px;
+      line-height: 1;
+      font-weight: normal;
+      font-size: 15px;
+      font-family: Consolas, "Liberation Mono", Courier, monospace;
+      text-align: center;
+
+    }
+  }
+
+  &:hover, .address:hover {
+    .address {
+      opacity: 1;
+      top: -45px;
+      pointer-events: auto;
+    }
+  }
+
+  // Styles for small screens
+  @include smaller(480px) {
+    width: 120px;
+
+    .address {
+      margin-right: -150px;
+      // background: red;
+      width: 300px;
+
+      code {
+        font-size: 13px;
+      }
+
+      &:after {
+        left: 50%;
+        bottom: 2px;
+      }
+    }
+  }
+}
