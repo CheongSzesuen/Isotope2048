@@ -1,7 +1,7 @@
 {
   "package": "com.isotope.2048.band",
   "name": "同位素2048",
-  "versionName": "1.0",
+  "versionName": "1.1",
   "versionCode": 1,
   "minPlatformVersion": 1000,
   "icon": "/common/logo.png",
