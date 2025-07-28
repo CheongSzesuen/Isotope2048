@@ -105,31 +105,36 @@ jobs:
       - name: Generate precise changelog
         id: changelog
         run: |
-          # 获取上一个release的tag
+          # 获取上一个release的tag（更可靠的获取方式）
           PREV_RELEASE=$(curl -s \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/releases?per_page=2" | \
             jq -r '.[].tag_name' | \
             grep -v "${{ github.ref_name }}" | \
-            head -n 1 || true)
+            head -n 1 || echo "")
           
-          # 如果没有找到之前的release，则设置为初始版本
+          # 设置日志范围
           if [ -z "$PREV_RELEASE" ]; then
-            echo "No previous release found, starting from initial commit"
+            echo "没有找到之前的release，从初始提交开始生成日志"
             CHANGELOG_RANGE=""
           else
             CHANGELOG_RANGE="$PREV_RELEASE..${{ github.ref_name }}"
           fi
           
-          # 生成精确格式的日志（标题与内容分离处理）
+          # 生成标题
           echo "CHANGELOG_TITLE=## 📝 更新日志 ${PREV_RELEASE:-初始版本} → ${{ github.ref_name }}" >> $GITHUB_ENV
-          echo "CHANGELOG_BODY<<EOF" >> $GITHUB_ENV
-          git log --pretty=format:"- **%s**%n  贡献者：%an <%ae>%n  提交时间：%ad%n  %b" \
+          
+          # 生成内容（修复heredoc语法问题）
+          CHANGELOG_CONTENT=$(git log --pretty=format:"- **%s**%n  贡献者：%an <%ae>%n  提交时间：%ad%n  %b" \
             --date=format:"%Y-%m-%d %H:%M:%S" \
             $CHANGELOG_RANGE | \
             sed '/^  $/d' | \
-            sed 's/^  $$BUG$$/[BUG]/' >> $GITHUB_ENV
+            sed 's/^  $$BUG$$/[BUG]/')
+          
+          # 使用环境变量存储内容
+          echo "CHANGELOG_BODY<<EOF" >> $GITHUB_ENV
+          echo "$CHANGELOG_CONTENT" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       # 8. 获取构建元数据
