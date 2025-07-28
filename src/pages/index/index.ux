@@ -65,6 +65,7 @@
 <script>
 import prompt from "@system.prompt"
 import storage from "@system.storage"
+import vibrator from "@system.vibrator"
 
 // 元素符号映射表
 const elements = {
@@ -406,6 +407,10 @@ function mo(dir) {
   if (!canMoveLeft(board) && !canMoveRight(board) && !canMoveUp(board) && !canMoveDown(board)) {
     over = 1
     rm0(board)
+    // 游戏结束时触发震动
+    vibrator.vibrate({
+      mode: "long"
+    })
     return false
   }
 
@@ -561,6 +566,11 @@ function decayElement(x, y) {
     originalValue: currentValue,
     originalUnstable: currentUnstable,
     decayedValue: decayValue
+  })
+
+  // 触发震动
+  vibrator.vibrate({
+    mode: "short"
   })
 
   // 更新方块
