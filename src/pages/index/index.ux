@@ -65,6 +65,7 @@
 <script>
 import prompt from "@system.prompt"
 import storage from "@system.storage"
+import vibrator from "@system.vibrator"
 
 // 元素符号映射表
 const elements = {
@@ -75,20 +76,20 @@ const elements = {
   32: "P", // 磷
   64: "Ni", // 镍
   128: "U", // 铀
-  256: "Pu", // 钋
+  256: "Pu", // 钚
   512: "Fm", // 镄
   1024: "Og", // 鿫
   2048: "∞" // ∞无穷-宇宙坍缩
 }
 
-// 不稳定元素配置（按照要求设置操作次数）
+// 不稳定元素配置（衰变机制）
 const unstableConfig = {
-  8: 8, // 铍，8次移动后爆炸
-  32: 24, // 磷，24次移动后爆炸
-  128: 96, // 铀，96次移动后爆炸
-  256: 192, // 钚（Pu），192次移动后爆炸
-  512: 384, // 镄（Fm），384次移动后爆炸
-  1024: 768 // 鿫（Og），768次移动后爆炸
+  8: 8, // 铍，8次移动后衰变
+  32: 24, // 磷，24次移动后衰变
+  128: 96, // 铀，96次移动后衰变
+  256: 192, // 钚，192次移动后衰变
+  512: 384, // 镄，384次移动后衰变
+  1024: 768 // 鿫，768次移动后衰变
 }
 
 function isUnstable(value) {
@@ -102,7 +103,7 @@ var sc = 0,
   added = Array(4),
   over = 0,
   lm = Array(4),
-  explodedTiles = [], // 记录爆炸的方块信息
+  decayedTiles = [], // 记录衰变的方块信息
   that
 
 // 初始化数组
@@ -162,9 +163,9 @@ export default {
           this.ch = o.ch || 0
           this.dark = o.dark
           this.ani = o.ani
-          // 恢复爆炸方块数据
-          if (o.explodedTiles) {
-            explodedTiles = o.explodedTiles
+          // 恢复衰变方块数据
+          if (o.decayedTiles) {
+            decayedTiles = o.decayedTiles
           }
           // 恢复撤销数据
           if (o.lm) {
@@ -199,14 +200,14 @@ export default {
       this.hsc = lhs
       this.sco = ls
 
-      // 恢复爆炸的方块
-      explodedTiles.forEach((tile) => {
+      // 恢复衰变的方块
+      decayedTiles.forEach((tile) => {
         board[tile.x][tile.y] = {
-          value: tile.value,
-          unstable: tile.unstable || 0
+          value: tile.originalValue,
+          unstable: tile.originalUnstable || 0
         }
       })
-      explodedTiles = []
+      decayedTiles = []
 
       // 恢复游戏状态
       for (let i = 0; i < 4; i++) {
@@ -286,8 +287,8 @@ export default {
       ),
       ls: ls,
       lhs: lhs,
-      // 保存爆炸方块数据
-      explodedTiles: explodedTiles
+      // 保存衰变方块数据
+      decayedTiles: decayedTiles
     }
     storage.set({
       key: "score",
@@ -329,8 +330,8 @@ export default {
 
 // 辅助函数
 function backup() {
-  // 清空之前的爆炸记录
-  explodedTiles = []
+  // 清空之前的衰变记录
+  decayedTiles = []
 
   // 备份当前状态
   for (let i = 0; i < 4; i++) {
@@ -397,25 +398,22 @@ function newblock() {
     a--
   }
 
-  if (!canMoveLeft(board) && !canMoveRight(board) && !canMoveUp(board) && !canMoveDown(board)) {
-    over = 1
-    return
-  }
-
-  for (a = 0; 4 > a; a++) {
-    for (b = 0; 4 > b; b++) {
-      if (!board[a][b] || board[a][b].value === 0) {
-        board[a][b] = {
-          value: 2,
-          unstable: 0
-        }
-        return
-      }
-    }
-  }
+  // 检查游戏是否结束
+  checkGameOver()
 }
 
 function mo(dir) {
+  // 先检查是否还有移动可能
+  if (!canMoveLeft(board) && !canMoveRight(board) && !canMoveUp(board) && !canMoveDown(board)) {
+    over = 1
+    rm0(board)
+    // 游戏结束时触发震动
+    vibrator.vibrate({
+      mode: "long"
+    })
+    return false
+  }
+
   let moved = false
 
   switch (dir) {
@@ -434,26 +432,13 @@ function mo(dir) {
   }
 
   if (moved) {
-    // 更新不稳定方块计数器
+    // 更新不稳定方块计数器并处理衰变
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
         if (board[i][j] && board[i][j].unstable > 0) {
           board[i][j].unstable--
           if (board[i][j].unstable === 0) {
-            // 记录爆炸的方块信息
-            explodedTiles.push({
-              x: i,
-              y: j,
-              value: board[i][j].value,
-              unstable: board[i][j].unstable
-            })
-
-            that.sco += Math.floor(board[i][j].value * 0.5)
-            board[i][j] = 0
-            prompt.showToast({
-              message: "元素不稳定爆炸了！",
-              duration: 500
-            })
+            decayElement(i, j) // 调用衰变函数
           }
         }
       }
@@ -463,10 +448,148 @@ function mo(dir) {
     newblock()
     that.updateUnstableDisplay()
     rm0(board)
+
+    // 再次检查游戏是否结束
+    checkGameOver()
   }
+
+  return moved
 }
 
-// 移动和合并函数（以moveleft为例，其他方向类似）
+// 新增游戏结束检查函数
+function checkGameOver() {
+  // 检查是否有空格
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      if (!board[i][j] || board[i][j].value === 0) {
+        over = 0
+        return
+      }
+    }
+  }
+
+  // 检查是否有可合并的相邻方块
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      const current = board[i][j]
+      if (!current) continue
+
+      // 检查右侧
+      if (j < 3 && board[i][j + 1] && board[i][j + 1].value === current.value) {
+        over = 0
+        return
+      }
+
+      // 检查下方
+      if (i < 3 && board[i + 1][j] && board[i + 1][j].value === current.value) {
+        over = 0
+        return
+      }
+    }
+  }
+
+  // 如果没有空格且没有可合并的方块，游戏结束
+  over = 1
+}
+
+// 元素衰变函数
+function decayElement(x, y) {
+  const currentValue = board[x][y].value
+  const currentUnstable = board[x][y].unstable
+  const possibleDecays = []
+
+  // 收集所有比当前元素小的元素作为可能的衰变结果
+  for (const value in elements) {
+    const numValue = parseInt(value)
+    if (numValue < currentValue && numValue !== currentValue) {
+      possibleDecays.push(numValue)
+    }
+  }
+
+  if (possibleDecays.length === 0) {
+    board[x][y] = 0
+    return
+  }
+
+  // 计算权重：值越小权重越高（概率越大）
+  const weights = possibleDecays.map((v) => 1 / (v / 2))
+  const totalWeight = weights.reduce((a, b) => a + b, 0)
+
+  // 根据权重随机选择衰变结果
+  let random = Math.random() * totalWeight
+  let selectedIndex = 0
+  for (let i = 0; i < weights.length; i++) {
+    random -= weights[i]
+    if (random <= 0) {
+      selectedIndex = i
+      break
+    }
+  }
+
+  let decayValue = possibleDecays[selectedIndex]
+
+  // 检查周围是否有相同元素
+  const directions = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1]
+  ]
+  let hasSameNeighbor = false
+
+  for (const [dx, dy] of directions) {
+    const nx = x + dx
+    const ny = y + dy
+
+    if (
+      nx >= 0 &&
+      nx < 4 &&
+      ny >= 0 &&
+      ny < 4 &&
+      board[nx][ny] &&
+      board[nx][ny].value === decayValue
+    ) {
+      hasSameNeighbor = true
+      break
+    }
+  }
+
+  // 如果有相同邻居，降为最小元素(氢)
+  if (hasSameNeighbor) {
+    decayValue = 2 // 氢
+  }
+
+  // 记录衰变前的状态（用于撤销）
+  decayedTiles.push({
+    x: x,
+    y: y,
+    originalValue: currentValue,
+    originalUnstable: currentUnstable,
+    decayedValue: decayValue
+  })
+
+  // 触发震动
+  vibrator.vibrate({
+    mode: "short"
+  })
+
+  // 更新方块
+  board[x][y] = {
+    value: decayValue,
+    unstable: isUnstable(decayValue) ? unstableConfig[decayValue] : 0
+  }
+
+  // 提示信息
+  prompt.showToast({
+    message: `${elements[currentValue]}衰变为${elements[decayValue]}!`,
+    duration: 500
+  })
+
+  // 分数调整为衰变值的10%
+  that.sco += Math.floor(decayValue * 0.1)
+}
+
+// 移动和合并函数
 function moveleft() {
   let moved = false
   for (let a = 0; a < 4; a++) {
@@ -510,7 +633,6 @@ function moveleft() {
   return moved
 }
 
-// 其他移动函数（moveright/moveup/movedown）结构相同，只是方向不同
 function moveright() {
   let moved = false
   for (let a = 0; a < 4; a++) {
@@ -737,34 +859,47 @@ function noBlockVertical(a, b, c, d) {
 
 .btn-reset {
   position: absolute;
-  left: 8px;
-  top: 363px;
+
+left: 5px;
+top: 387px;
+width: 92px;
+height: 64px;
 }
 
 .btn-undo {
   position: absolute;
-  left: 100px;
-  top: 363px;
+
+left: 115px;
+top: 387px;
+width: 92px;
+height: 64px;
 }
 
 .btn-info {
   position: absolute;
-  left: 56px;
-  top: 424px;
+left: 65px;
+top: 451px;
+width: 83px;
+height: 62px;
 }
 
 .btn-back {
   position: absolute;
-  left: 45px;
-  top: 6px;
+/*back.png*/
+
+left: 55px;
+top: 7px;
+width: 102px;
+height: 72px;
+
 }
 
 .game-board {
   position: absolute;
-  left: 3px;
-  top: 165px;
-  width: 186px;
-  height: 186px;
+  left: 4px;
+top: 170px;
+width: 206px;
+height: 206px;
   padding-top: 3px;
   padding-left: 3px;
   display: flex;
@@ -772,9 +907,9 @@ function noBlockVertical(a, b, c, d) {
 }
 
 .square {
-  width: 40px;
-  height: 40px;
-  margin-top: 4px;
+  width: 44px;
+  height: 44px;
+  margin-top: 5px;
   margin-left: 4px;
   border-radius: 13px;
   font-size: 15px;
@@ -828,7 +963,9 @@ function noBlockVertical(a, b, c, d) {
 
 .mode-btn {
   position: absolute;
-  left: 45px;
-  top: 633px;
+left: 54px;
+top: 660px;
+width: 102px;
+height: 72px;
 }
 </style>
