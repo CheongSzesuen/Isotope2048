@@ -1,71 +1,50 @@
 <template>
-  <div class="container" @swipe="move">
-    <!--背景+按钮-->
-    <div class="bg" if="{{ dark }}">
-      <img src="/common/bg2.png" class="bg-img" />
-      <img class="btn-reset" src="/common/reset_b.png" @click="new_game" />
-      <img class="btn-undo" src="/common/undo_b.png" @click="chcb" />
-      <img class="btn-info" src="/common/info_b.png" @click="openMenu()" />
-    </div>
-    <div class="bg" else>
-      <img src="/common/bg1.png" class="bg-img" />
-      <img class="btn-reset" src="/common/reset.png" @click="new_game" />
-      <img class="btn-undo" src="/common/undo.png" @click="chcb" />
-      <img class="btn-info" src="/common/info.png" @click="openMenu()" />
-    </div>
-
-    <!--游戏区域-->
-    <div class="game-board">
-      <block for="blocks">
-        <text
-          class="square"
-          style="background-color: {{ bgc[md[$item]] }};"
-          if="{{ !dark }}"
-          id="{{ $item }}"
-        >
-          {{ getElementSymbol(md[$item]) }}
-          <span if="{{ unstable[$item] > 0 }}" class="unstable-count">{{ unstable[$item] }}</span>
-        </text>
-        <text
-          class="square"
-          style="color: {{ bgc[md[$item]] }};background-color: {{ ise[$item] }}"
-          else
-          id="{{ $item }}"
-        >
-          {{ getElementSymbol(md[$item]) }}
-          <span if="{{ unstable[$item] > 0 }}" class="unstable-count">{{ unstable[$item] }}</span>
-        </text>
-      </block>
-    </div>
-
-    <!--分数显示-->
-    <text class="score">最高 {{ hsc }}</text>
-    <text class="current-score">当前 {{ sco }}</text>
-
-    <!--关于菜单-->
-    <div class="menu-overlay" if="{{ menuFlag }}">
-      <scroll class="menu-content" scroll-y="true" bounces="true" id="about">
-        <img src="/common/about.png" />
-        <img src="/common/true.png" if="{{ dark }}" class="mode-btn" @click="changeMode" />
-        <img src="/common/false.png" else class="mode-btn" @click="changeMode" />
-        <!-- <img src="/common/true.png" if="{{ ani }}" class="ani-btn" @click="changeani" />
-        <img src="/common/false.png" else class="ani-btn" @click="changeani" /> -->
-      </scroll>
-    </div>
-
-    <!--返回按钮-->
-    <img
-      class="btn-back"
-      src="{{ dark||menuFlag ? '/common/back_b.png' : '/common/back.png' }}"
-      @click="exit('e')"
-    />
-  </div>
-</template>
-
-<script>
-import prompt from "@system.prompt"
-import storage from "@system.storage"
+	<div onswipe="move" class="bg">
+	  <!--背景+按钮-->
+	  <div class="bg" if="{{dark}}">
+		<img src="/common/Dark.png" class="bg"/>
+		<!-- 返回按钮(暗色) -->
+		<img src="/common/Back_B_rgb.png" style="position: absolute;left: 6px;top: 6px;" @click="exit"/>
+		<!-- 设置按钮(暗色) -->
+		<img src="/common/info_b.png" style="position: absolute;left: 258px;top: 6px;" @click="openMenu"/>
+		<img style="left: 6px;top: 402px;" src="/common/Reset_B.png" @click="new_game" />
+		<img style="position: absolute;left: 258px;top: 402px;" src="/common/Undo_B.png" @click="chcb" />
+		<!--积分版-->
+		<text class="score">{{ sco }}</text>
+		<text class="score" style="font-size: 20px;top: 12px;">{{time}}</text>
+	  </div>
+	  <div class="bg" else>
+		<img src="/common/Light.png" class="bg"/>
+		<!-- 返回按钮(亮色) -->
+		<img src="/common/back.png" style="position: absolute;left: 6px;top: 6px;" @click="exit"/>
+		<!-- 设置按钮(亮色) -->
+		<img src="/common/info.png" style="position: absolute;left: 258px;top: 6px;" @click="openMenu"/>
+		<img style="left: 6px;top: 402px;" src="/common/Reset.png" @click="new_game" />
+		<img style="position: absolute;left: 258px;top: 402px;" src="/common/Undo.png" @click="chcb" />
+		<!--积分版-->
+		<text class="score" style="color: rgba(0, 0, 0, 0.4);">{{ sco }}</text>
+		<text class="score" style="font-size: 20px;top: 12px;color: rgba(0, 0, 0, 0.6);">{{time}}</text>
+	  </div>
+	  
+	  <!--游戏区域-->
+	  <div style="position: absolute;left: 14px;top: 86px;width: 308px;height: 308px;padding-top: 8px;padding-left:8px;display: flex;flex-wrap: wrap;" >
+		<text class="square" for="{{blocks}}" style="background-color: {{ bgc[md[$item]] }};border: {{(!!md[$item])*3}}px;font-size: {{md[$item]>1000?16:32}}px;" id="b{{$item}}" if="{{!dark}}">
+		  {{ getElementSymbol(md[$item]) }}
+		  <span if="{{ unstable[$item] > 0 }}" class="unstable-count">{{ unstable[$item] }}</span>
+		</text>
+		<text class="square" for="{{blocks}}" style="color: {{ bgc[md[$item]] }};background-color: {{ md[$item] ? 'rgba(0, 0, 0, 0.36)' : '#00000000' }};border: {{(!!md[$item])*3}}px;font-size: {{md[$item]>1000?16:32}}px;" id="b{{$item}}" else >
+		  {{ getElementSymbol(md[$item]) }}
+		  <span if="{{ unstable[$item] > 0 }}" class="unstable-count">{{ unstable[$item] }}</span>
+		</text>
+	  </div>
+	</div>
+  </template>
+  
+  <script>
+  import prompt from "@system.prompt";
+import storage from "@system.storage";
 import vibrator from "@system.vibrator"
+import router from "@system.router";
 
 // 元素符号映射表
 const elements = {
@@ -96,109 +75,149 @@ function isUnstable(value) {
   return unstableConfig[value] !== undefined
 }
 
-var sc = 0,
+let sc = 0,
   ls,
   lhs,
   board = Array(4),
   added = Array(4),
   over = 0,
   lm = Array(4),
-  decayedTiles = [], // 记录衰变的方块信息
-  that
+  that,
+  decayedTiles = []; // 记录衰变的方块信息
 
-// 初始化数组
 for (let i = 0; i < 4; i++) {
-  lm[i] = new Array(4)
-  board[i] = new Array(4)
-  added[i] = new Array(4)
+  lm[i] = new Array(4);
+  board[i] = new Array(4);
+  added[i] = new Array(4);
+  for (let j = 0; j < 4; j++) {
+    board[i][j] = {value: 0, unstable: 0};
+    lm[i][j] = {value: 0, unstable: 0};
+  }
 }
 
 export default {
   public: {
     blocks: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
-    md: [],
+    md: Array(16),
     unstable: Array(16).fill(0),
     hsc: 0,
     sco: sc,
-    bgc: [],
-    ise: [],
+    bgc: {},
     ch: 0,
-    dark: false,
-    menuFlag: false,
-    ani: true
+    dark: true,
+	time: "00:00"
   },
-
+  
+  exit() {
+    router.back();
+  },
+  
+  openMenu() {
+    router.push({uri: "pages/settings"});
+  },
+  
   getElementSymbol(value) {
     return elements[value] || ""
   },
-
+  
   onInit() {
-    that = this
-    // 初始化颜色
+    // 优先读取暗色模式设置
+    storage.get({
+      key: "dark",
+      success: (data) => {
+        this.dark = data === "dark";
+      },
+      fail: () => {
+        this.dark = true; // 默认暗色模式
+      }
+    });
+    
+    that = this;
+    // 初始化时间
+    this.updateTime()
+    
+    // 设置定时器每分钟更新一次
+    setInterval(() => this.updateTime(), 1000)
+	
+    // 颜色初始化
     let tempc =
-      "rgba(0,0,0,0) #EFE5DA #F0E0C9 #fcb477 #ff9c61 #ff865d #ff6a38 #ebcf71 #ebcc5f #ebc94f #ebc53f #ebc22c #F2B6B6 #E8ED51 #FFE3FB #E8FF8C #FFDEC9 #F5A433 #E6109B #96C4E6 #E560CD".split(
-        " "
-      )
+      "rgba(0,0,0,0) #EFE5DA #F0E0C9 #fcb477 #ff9c61 #ff865d #ff6a38 #ebcf71 #ebcc5f #ebc94f #ebc53f #ebc22c #F2B6B6 #E8ED51 #FFE3FB #E8FF8C #FFDEC9 #F5A433 #E6109B #96C4E6 #E560CD".split(" ");
     tempc.forEach((a, index) => {
-      this.bgc[2 ** index] = a
-    })
-    this.bgc[""] = "rgba(0, 0, 0, 0)"
-
-    // 加载游戏状态
+      this.bgc[2 ** index] = a;
+    });
+    this.bgc[""] = "#00000000";
+    
     storage.get({
       key: "score",
       success: (data) => {
         if (data) {
-          let o = JSON.parse(data)
+          let o = JSON.parse(data);
           board = o.map.map((row) =>
             row.map((cell) => {
-              if (typeof cell === "object") return cell
+              if (typeof cell === "object") return cell;
               return {value: cell, unstable: 0}
             })
-          )
-          this.updateUnstableDisplay()
-          rm0(board)
-          this.hsc = o.hs
+          );
+          this.updateUnstableDisplay();
+          rm0(board);
+          this.hsc = o.hs;
           this.sco = o.sc
-          this.ch = o.ch || 0
-          this.dark = o.dark
-          this.ani = o.ani
+          this.ch = o.ch || 0;
+          this.dark = typeof o.dark !== 'undefined' ? o.dark : this.dark;
+          
           // 恢复衰变方块数据
           if (o.decayedTiles) {
-            decayedTiles = o.decayedTiles
+            decayedTiles = o.decayedTiles;
           }
+          
           // 恢复撤销数据
           if (o.lm) {
             for (let i = 0; i < 4; i++) {
               for (let j = 0; j < 4; j++) {
-                lm[i][j] = o.lm[i][j] ? {...o.lm[i][j]} : 0
+                lm[i][j] = o.lm[i][j] ? {...o.lm[i][j]} : {value: 0, unstable: 0};
               }
             }
-            ls = o.ls
-            lhs = o.lhs
+            ls = o.ls;
+            lhs = o.lhs;
           }
         } else {
-          this.new_game()
+          this.new_game();
         }
+      },
+      fail: () => {
+        this.new_game();
       }
-    })
+    });
     clear(added)
   },
-
+  
+  onShow() {
+    // 每次页面显示时检查最新设置
+    storage.get({
+      key: "dark",
+      success: (data) => {
+        this.dark = data === "dark";
+      }
+    });
+  },
+  
   updateUnstableDisplay() {
-    let index = 0
+    let index = 0;
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        this.unstable[index] = board[i][j]?.unstable || 0
-        index++
+        this.unstable[index] = board[i][j]?.unstable || 0;
+        index++;
       }
     }
   },
-
+  updateTime() {
+    const now = new Date()
+    this.time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
+  },
   chcb() {
     if (this.ch == 1) {
-      this.hsc = lhs
-      this.sco = ls
+      this.hsc = lhs;
+      this.sco = ls;
 
       // 恢复衰变的方块
       decayedTiles.forEach((tile) => {
@@ -206,64 +225,60 @@ export default {
           value: tile.originalValue,
           unstable: tile.originalUnstable || 0
         }
-      })
-      decayedTiles = []
+      });
+      decayedTiles = [];
 
       // 恢复游戏状态
       for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-          board[i][j] = lm[i][j] ? {...lm[i][j]} : 0
+          board[i][j] = lm[i][j] ? {...lm[i][j]} : {value: 0, unstable: 0};
         }
       }
 
-      this.updateUnstableDisplay()
-      rm0(board)
-      over = 0
-      this.save()
-      this.ch = 0
+      this.updateUnstableDisplay();
+      rm0(board);
+      over = 0;
+      this.save();
+      this.ch = 0;
     } else {
       prompt.showToast({
-        message: "不，不可以再撤啦",
-        duration: 500
-      })
+        message: "不能再撤啦",
+        duration: 1000
+      });
     }
   },
-
+  
   new_game() {
-    backup()
-    newgame()
-    this.sco = 0
-    this.save()
+    backup();
+    newgame();
+    this.sco = 0;
+    this.save();
   },
-
+  
   move(eve) {
-    if (this.menuFlag) {
-      if (eve.direction == "right") this.exit("e")
-      return
+    backup(); // 在移动前备份状态
+    mo(eve.direction);
+    if (over) {
+      prompt.showToast({
+        message: "Gameover!",
+        duration: 2000,
+      });
+      // 游戏结束时触发震动
+      vibrator.vibrate({
+        mode: "long"
+      });
     }
-
-    const direction = eve.direction.toLowerCase()
-    if (["up", "down", "left", "right"].includes(direction)) {
-      backup() // 在移动前备份状态
-      mo(direction)
-      if (over) {
-        prompt.showToast({
-          message: "Gameover!",
-          duration: 2000
-        })
-      }
-      if (this.sco > this.hsc) {
-        this.hsc = this.sco
-      }
-      this.save()
+    if (this.sco > this.hsc) {
+      this.hsc = this.sco;
     }
+    this.save();
   },
-
+  
   save() {
     let o = {
       map: board.map((row) =>
         row.map((cell) => {
-          if (!cell) return 0
+          if (!cell) return 0;
           return {
             value: cell.value,
             unstable: cell.unstable || 0
@@ -273,12 +288,11 @@ export default {
       hs: this.hsc,
       sc: this.sco,
       dark: this.dark,
-      ani: this.ani,
       ch: this.ch,
       // 保存撤销数据
       lm: lm.map((row) =>
         row.map((cell) => {
-          if (!cell) return 0
+          if (!cell) return 0;
           return {
             value: cell.value,
             unstable: cell.unstable || 0
@@ -289,146 +303,101 @@ export default {
       lhs: lhs,
       // 保存衰变方块数据
       decayedTiles: decayedTiles
-    }
+    };
     storage.set({
       key: "score",
       value: JSON.stringify(o),
-      success: () => {},
-      fail: () => {}
-    })
-  },
-
-  exit(a) {
-    if (a.direction == "right" || a == "e") {
-      if (this.menuFlag) {
-        this.menuFlag = false
-      } else {
-        this.$app.exit()
+      fail: (data, code) => {
+        console.error(`保存游戏数据失败: ${code}`);
       }
-    }
-  },
-
-  openMenu() {
-    this.menuFlag = true
-  },
-
-  changeMode() {
-    this.dark = !this.dark
-    this.save()
-  },
-
-  changeani() {
-    this.ani = !this.ani
-    this.save()
-  },
-
-  onBackPress() {
-    this.exit("e")
-    return true
+    });
   }
-}
+};
 
-// 辅助函数
-function backup() {
-  // 清空之前的衰变记录
-  decayedTiles = []
-
-  // 备份当前状态
+// 以下是游戏核心逻辑函数
+function rm0(sm) {
+  let a = 0;
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
-      lm[i][j] = board[i][j] ? {...board[i][j]} : 0
-    }
-  }
-  ls = that.sco
-  lhs = that.hsc
-  that.ch = 1
-}
-
-function rm0(sm) {
-  let a = 0
-  for (let i = 0; i < 4; i++) {
-    for (var b = 0; 4 > b; b++) {
-      if (!sm[i][b] || sm[i][b].value === 0) {
-        that.md[a] = ""
-        that.ise[a] = "#00000000"
-        that.unstable[a] = 0
+      if (!sm[i][j] || sm[i][j].value === 0) {
+        that.md[a] = "";
       } else {
-        that.ise[a] = "#ffffff20"
-        that.md[a] = sm[i][b].value
-        that.unstable[a] = sm[i][b].unstable || 0
+        that.md[a] = sm[i][j].value;
       }
-      a++
+      a++;
     }
   }
+  that.updateUnstableDisplay();
 }
 
 function clear(m) {
   for (let i = 0; i < 4; i++) {
-    m[i].fill(0)
+    m[i].fill(0);
   }
 }
 
 function newgame() {
-  over = 0
-  clear(board)
-  newblock()
-  newblock()
-  rm0(board)
+  over = 0;
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      board[i][j] = {value: 0, unstable: 0};
+    }
+  }
+  newblock();
+  newblock();
+  rm0(board);
+  decayedTiles = [];
 }
 
 function rand_num() {
-  return Math.floor(Math.random() * 1000)
+  return Math.floor(Math.random() * 1000);
 }
 
 function newblock() {
-  for (
-    var a = 3, b = rand_num() % 4, c = rand_num() % 4, d = 50 < rand_num() % 100 ? 4 : 2;
-    0 < a;
-
-  ) {
+  for (var a = 3, b = rand_num() % 4, c = rand_num() % 4, d = 50 < rand_num() % 100 ? 4 : 2; 0 < a;) {
     if (!board[b][c] || board[b][c].value === 0) {
       board[b][c] = {
         value: d,
         unstable: isUnstable(d) ? unstableConfig[d] : 0
-      }
-      return
+      };
+      return;
     }
-    b = rand_num() % 4
-    c = rand_num() % 4
-    a--
+    b = rand_num() % 4;
+    c = rand_num() % 4;
+    a--;
   }
-
+  
   // 检查游戏是否结束
-  checkGameOver()
+  checkGameOver();
 }
 
 function mo(dir) {
   // 先检查是否还有移动可能
   if (!canMoveLeft(board) && !canMoveRight(board) && !canMoveUp(board) && !canMoveDown(board)) {
-    over = 1
-    rm0(board)
+    over = 1;
+    rm0(board);
     // 游戏结束时触发震动
     vibrator.vibrate({
       mode: "long"
-    })
-    return false
+    });
+    return false;
   }
 
-  let moved = false
+  let moved = false;
 
-  switch (dir) {
+  switch (dir.toLowerCase()) {
     case "left":
-      moved = moveleft()
-      break
+      moved = moveleft();
+      break;
     case "right":
-      moved = moveright()
-      break
+      moved = moveright();
+      break;
     case "up":
-      moved = moveup()
-      break
+      moved = moveup();
+      break;
     case "down":
-      moved = movedown()
-      break
+      moved = movedown();
+      break;
   }
 
   if (moved) {
@@ -436,34 +405,30 @@ function mo(dir) {
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
         if (board[i][j] && board[i][j].unstable > 0) {
-          board[i][j].unstable--
+          board[i][j].unstable--;
           if (board[i][j].unstable === 0) {
-            decayElement(i, j) // 调用衰变函数
+            decayElement(i, j); // 调用衰变函数
           }
         }
       }
     }
 
-    clear(added)
-    newblock()
-    that.updateUnstableDisplay()
-    rm0(board)
-
-    // 再次检查游戏是否结束
-    checkGameOver()
+    clear(added);
+    newblock();
+    rm0(board);
   }
 
-  return moved
+  return moved;
 }
 
-// 新增游戏结束检查函数
+// 游戏结束检查函数
 function checkGameOver() {
   // 检查是否有空格
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
       if (!board[i][j] || board[i][j].value === 0) {
-        over = 0
-        return
+        over = 0;
+        return;
       }
     }
   }
@@ -471,62 +436,62 @@ function checkGameOver() {
   // 检查是否有可合并的相邻方块
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
-      const current = board[i][j]
-      if (!current) continue
+      const current = board[i][j];
+      if (!current) continue;
 
       // 检查右侧
       if (j < 3 && board[i][j + 1] && board[i][j + 1].value === current.value) {
-        over = 0
-        return
+        over = 0;
+        return;
       }
 
       // 检查下方
       if (i < 3 && board[i + 1][j] && board[i + 1][j].value === current.value) {
-        over = 0
-        return
+        over = 0;
+        return;
       }
     }
   }
 
   // 如果没有空格且没有可合并的方块，游戏结束
-  over = 1
+  over = 1;
 }
 
 // 元素衰变函数
 function decayElement(x, y) {
-  const currentValue = board[x][y].value
-  const currentUnstable = board[x][y].unstable
-  const possibleDecays = []
+  const currentValue = board[x][y].value;
+  const currentUnstable = board[x][y].unstable;
+  const possibleDecays = [];
 
   // 收集所有比当前元素小的元素作为可能的衰变结果
   for (const value in elements) {
-    const numValue = parseInt(value)
+    const numValue = parseInt(value);
     if (numValue < currentValue && numValue !== currentValue) {
-      possibleDecays.push(numValue)
+      possibleDecays.push(numValue);
     }
   }
 
   if (possibleDecays.length === 0) {
-    board[x][y] = 0
-    return
+    board[x][y] = {value: 0, unstable: 0};
+    return;
   }
 
   // 计算权重：值越小权重越高（概率越大）
-  const weights = possibleDecays.map((v) => 1 / (v / 2))
-  const totalWeight = weights.reduce((a, b) => a + b, 0)
+  const weights = possibleDecays.map((v) => 1 / (v / 2));
+  const totalWeight = weights.reduce((a, b) => a + b, 0);
 
   // 根据权重随机选择衰变结果
-  let random = Math.random() * totalWeight
-  let selectedIndex = 0
+  let random = Math.random() * totalWeight;
+  let selectedIndex = 0;
   for (let i = 0; i < weights.length; i++) {
-    random -= weights[i]
+    random -= weights[i];
     if (random <= 0) {
-      selectedIndex = i
-      break
+      selectedIndex = i;
+      break;
     }
   }
 
-  let decayValue = possibleDecays[selectedIndex]
+  let decayValue = possibleDecays[selectedIndex];
 
   // 检查周围是否有相同元素
   const directions = [
@@ -534,12 +499,12 @@ function decayElement(x, y) {
     [1, 0],
     [0, -1],
     [0, 1]
-  ]
-  let hasSameNeighbor = false
+  ];
+  let hasSameNeighbor = false;
 
   for (const [dx, dy] of directions) {
-    const nx = x + dx
-    const ny = y + dy
+    const nx = x + dx;
+    const ny = y + dy;
 
     if (
       nx >= 0 &&
@@ -549,14 +514,14 @@ function decayElement(x, y) {
       board[nx][ny] &&
       board[nx][ny].value === decayValue
     ) {
-      hasSameNeighbor = true
-      break
+      hasSameNeighbor = true;
+      break;
     }
   }
 
   // 如果有相同邻居，降为最小元素(氢)
   if (hasSameNeighbor) {
-    decayValue = 2 // 氢
+    decayValue = 2; // 氢
   }
 
   // 记录衰变前的状态（用于撤销）
@@ -566,391 +531,338 @@ function decayElement(x, y) {
     originalValue: currentValue,
     originalUnstable: currentUnstable,
     decayedValue: decayValue
-  })
+  });
 
   // 触发震动
   vibrator.vibrate({
     mode: "short"
-  })
+  });
 
   // 更新方块
   board[x][y] = {
     value: decayValue,
     unstable: isUnstable(decayValue) ? unstableConfig[decayValue] : 0
-  }
+  };
 
   // 提示信息
   prompt.showToast({
     message: `${elements[currentValue]}衰变为${elements[decayValue]}!`,
     duration: 500
-  })
+  });
 
   // 分数调整为衰变值的10%
-  that.sco += Math.floor(decayValue * 0.1)
+  that.sco += Math.floor(decayValue * 0.1);
 }
 
-// 移动和合并函数
+function backup() {
+  // 清空之前的衰变记录
+  decayedTiles = [];
+
+  // 备份当前状态
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      lm[i][j] = board[i][j] ? {...board[i][j]} : {value: 0, unstable: 0};
+    }
+  }
+  ls = that.sco;
+  lhs = that.hsc;
+  that.ch = 1;
+}
+
+// 移动方向相关函数
 function moveleft() {
-  let moved = false
+  let moved = false;
   for (let a = 0; a < 4; a++) {
     for (let b = 1; b < 4; b++) {
-      const current = board[a][b]
+      const current = board[a][b];
       if (current && current.value !== 0) {
         for (let c = 0; c < b; c++) {
-          const target = board[a][c]
+          const target = board[a][c];
 
           if ((!target || target.value === 0) && noBlockHorizontal(a, c, b, board)) {
-            board[a][c] = current
-            board[a][b] = 0
-            moved = true
-            break
+            board[a][c] = current;
+            board[a][b] = {value: 0, unstable: 0};
+            moved = true;
+            break;
           } else if (
             target &&
             target.value === current.value &&
             noBlockHorizontal(a, c, b, board) &&
             0 == added[a][c]
           ) {
-            const newValue = target.value * 2
+            const newValue = target.value * 2;
             board[a][c] = {
               value: newValue,
               unstable: isUnstable(newValue) ? unstableConfig[newValue] : 0
-            }
+            };
 
-            let bonus = 0
-            if (current.unstable) bonus += current.unstable * 5
-            if (target.unstable) bonus += target.unstable * 5
-            that.sco += board[a][c].value + bonus
+            let bonus = 0;
+            if (current.unstable) bonus += current.unstable * 5;
+            if (target.unstable) bonus += target.unstable * 5;
+            that.sco += newValue + bonus;
 
-            board[a][b] = 0
-            added[a][c] = 1
-            moved = true
-            break
+            board[a][b] = {value: 0, unstable: 0};
+            added[a][c] = 1;
+            moved = true;
+            break;
           }
         }
       }
     }
   }
-  return moved
+  return moved;
 }
 
 function moveright() {
-  let moved = false
+  let moved = false;
   for (let a = 0; a < 4; a++) {
     for (let b = 2; b >= 0; b--) {
-      const current = board[a][b]
+      const current = board[a][b];
       if (current && current.value !== 0) {
         for (let c = 3; c > b; c--) {
-          const target = board[a][c]
+          const target = board[a][c];
 
           if ((!target || target.value === 0) && noBlockHorizontal(a, b, c, board)) {
-            board[a][c] = current
-            board[a][b] = 0
-            moved = true
-            break
+            board[a][c] = current;
+            board[a][b] = {value: 0, unstable: 0};
+            moved = true;
+            break;
           } else if (
             target &&
             target.value === current.value &&
             noBlockHorizontal(a, b, c, board) &&
             0 == added[a][c]
           ) {
-            const newValue = target.value * 2
+            const newValue = target.value * 2;
             board[a][c] = {
               value: newValue,
               unstable: isUnstable(newValue) ? unstableConfig[newValue] : 0
-            }
+            };
 
-            let bonus = 0
-            if (current.unstable) bonus += current.unstable * 5
-            if (target.unstable) bonus += target.unstable * 5
-            that.sco += newValue + bonus
+            let bonus = 0;
+            if (current.unstable) bonus += current.unstable * 5;
+            if (target.unstable) bonus += target.unstable * 5;
+            that.sco += newValue + bonus;
 
-            board[a][b] = 0
-            added[a][c] = 1
-            moved = true
-            break
+            board[a][b] = {value: 0, unstable: 0};
+            added[a][c] = 1;
+            moved = true;
+            break;
           }
         }
       }
     }
   }
-  return moved
+  return moved;
 }
 
 function moveup() {
-  let moved = false
+  let moved = false;
   for (let a = 0; a < 4; a++) {
     for (let b = 1; b < 4; b++) {
-      const current = board[b][a]
+      const current = board[b][a];
       if (current && current.value !== 0) {
         for (let c = 0; c < b; c++) {
-          const target = board[c][a]
+          const target = board[c][a];
 
           if ((!target || target.value === 0) && noBlockVertical(a, c, b, board)) {
-            board[c][a] = current
-            board[b][a] = 0
-            moved = true
-            break
+            board[c][a] = current;
+            board[b][a] = {value: 0, unstable: 0};
+            moved = true;
+            break;
           } else if (
             target &&
             target.value === current.value &&
             noBlockVertical(a, c, b, board) &&
             0 == added[c][a]
           ) {
-            const newValue = target.value * 2
+            const newValue = target.value * 2;
             board[c][a] = {
               value: newValue,
               unstable: isUnstable(newValue) ? unstableConfig[newValue] : 0
-            }
+            };
 
-            let bonus = 0
-            if (current.unstable) bonus += current.unstable * 5
-            if (target.unstable) bonus += target.unstable * 5
-            that.sco += newValue + bonus
+            let bonus = 0;
+            if (current.unstable) bonus += current.unstable * 5;
+            if (target.unstable) bonus += target.unstable * 5;
+            that.sco += newValue + bonus;
 
-            board[b][a] = 0
-            added[c][a] = 1
-            moved = true
-            break
+            board[b][a] = {value: 0, unstable: 0};
+            added[c][a] = 1;
+            moved = true;
+            break;
           }
         }
       }
     }
   }
-  return moved
+  return moved;
 }
 
 function movedown() {
-  let moved = false
+  let moved = false;
   for (let a = 0; a < 4; a++) {
     for (let b = 2; b >= 0; b--) {
-      const current = board[b][a]
+      const current = board[b][a];
       if (current && current.value !== 0) {
         for (let c = 3; c > b; c--) {
-          const target = board[c][a]
+          const target = board[c][a];
 
           if ((!target || target.value === 0) && noBlockVertical(a, b, c, board)) {
-            board[c][a] = current
-            board[b][a] = 0
-            moved = true
-            break
+            board[c][a] = current;
+            board[b][a] = {value: 0, unstable: 0};
+            moved = true;
+            break;
           } else if (
             target &&
             target.value === current.value &&
             noBlockVertical(a, b, c, board) &&
             0 == added[c][a]
           ) {
-            const newValue = target.value * 2
+            const newValue = target.value * 2;
             board[c][a] = {
               value: newValue,
               unstable: isUnstable(newValue) ? unstableConfig[newValue] : 0
-            }
+            };
 
-            let bonus = 0
-            if (current.unstable) bonus += current.unstable * 5
-            if (target.unstable) bonus += target.unstable * 5
-            that.sco += newValue + bonus
+            let bonus = 0;
+            if (current.unstable) bonus += current.unstable * 5;
+            if (target.unstable) bonus += target.unstable * 5;
+            that.sco += newValue + bonus;
 
-            board[b][a] = 0
-            added[c][a] = 1
-            moved = true
-            break
+            board[b][a] = {value: 0, unstable: 0};
+            added[c][a] = 1;
+            moved = true;
+            break;
           }
         }
       }
     }
   }
-  return moved
+  return moved;
 }
 
-// 移动可能性判断函数
+// 辅助函数
 function canMoveLeft(a) {
   for (let b = 0; b < 4; b++) {
     for (let c = 0; c < 4; c++) {
-      const cell = a[b][c]
+      const cell = a[b][c];
       if (cell && cell.value !== 0 && c != 0) {
-        const left = a[b][c - 1]
+        const left = a[b][c - 1];
         if (!left || left.value === 0 || left.value === cell.value) {
-          return true
+          return true;
         }
       }
     }
   }
-  return false
+  return false;
 }
 
 function canMoveRight(a) {
   for (let b = 0; b < 4; b++) {
     for (let c = 0; c < 4; c++) {
-      const cell = a[b][c]
+      const cell = a[b][c];
       if (cell && cell.value !== 0 && c != 3) {
-        const right = a[b][c + 1]
+        const right = a[b][c + 1];
         if (!right || right.value === 0 || right.value === cell.value) {
-          return true
+          return true;
         }
       }
     }
   }
-  return false
+  return false;
 }
 
 function canMoveUp(a) {
   for (let b = 0; b < 4; b++) {
     for (let c = 0; c < 4; c++) {
-      const cell = a[b][c]
+      const cell = a[b][c];
       if (cell && cell.value !== 0 && b != 0) {
-        const up = a[b - 1][c]
+        const up = a[b - 1][c];
         if (!up || up.value === 0 || up.value === cell.value) {
-          return true
+          return true;
         }
       }
     }
   }
-  return false
+  return false;
 }
 
 function canMoveDown(a) {
   for (let b = 0; b < 4; b++) {
     for (let c = 0; c < 4; c++) {
-      const cell = a[b][c]
+      const cell = a[b][c];
       if (cell && cell.value !== 0 && b != 3) {
-        const down = a[b + 1][c]
+        const down = a[b + 1][c];
         if (!down || down.value === 0 || down.value === cell.value) {
-          return true
+          return true;
         }
       }
     }
   }
-  return false
+  return false;
 }
 
-// 判断移动路径是否有阻碍
 function noBlockHorizontal(a, b, c, d) {
-  for (b += 1; b < c; b++) {
-    if (d[a][b] && d[a][b].value !== 0) return false
-  }
-  return true
+  for (b += 1; b < c; b++)
+    if (d[a][b] && d[a][b].value !== 0) return false;
+  return true;
 }
 
 function noBlockVertical(a, b, c, d) {
-  for (b += 1; b < c; b++) {
-    if (d[b][a] && d[b][a].value !== 0) return false
+  for (b += 1; b < c; b++)
+    if (d[b][a] && d[b][a].value !== 0) return false;
+  return true;
+}
+  </script>
+  
+  <style>
+  text {
+	font-weight: bold;
+	text-align: center;
   }
-  return true
-}
-</script>
+  .score {
+	position: absolute;
+	left: 78px;
+	top: 441px;
+	width: 180px;
+	height: 32px;
+	font-size: 24px;
+	text-align: center;
+	color: rgba(255, 255, 255, 0.6);
+  }
+  .square {
+	width: 68px;
+	height: 68px;
+	margin-top: 4px;
+	margin-left: 4px;
+	border-radius: 20px;
+	color: #59503f;
+	border: 0px solid rgba(255, 255, 255, 0.06);
+	position: relative;
+  }
+  .unstable-count {
+	position: absolute;
+	bottom: 2px;
+	right: 2px;
+	font-size: 10px;
+	color: red;
+	font-weight: bold;
+  }
+  .bg {
+	position: absolute;
+	width: 336px;
+	height: 480px;
+	background-color: black;
+  }
 
-<style>
-.container {
-  position: relative;
-  width: 192px;
-  height: 490px;
+  .time-text {
+	position: absolute;
+	left: 150px;
+	top: 12px;
+	font-size: 20px;
+	color: white;
+	text-align: center;
+	width: 36px;
 }
-
-.bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.bg-img {
-  width: 100%;
-  height: 100%;
-}
-
-.btn-reset {
-  position: absolute;
-  left: 8px;
-  top: 363px;
-}
-
-.btn-undo {
-  position: absolute;
-  left: 100px;
-  top: 363px;
-}
-
-.btn-info {
-  position: absolute;
-  left: 56px;
-  top: 424px;
-}
-
-.btn-back {
-  position: absolute;
-  left: 45px;
-  top: 6px;
-}
-
-.game-board {
-  position: absolute;
-  left: 3px;
-  top: 165px;
-  width: 186px;
-  height: 186px;
-  padding-top: 3px;
-  padding-left: 3px;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.square {
-  width: 40px;
-  height: 40px;
-  margin-top: 4px;
-  margin-left: 4px;
-  border-radius: 13px;
-  font-size: 15px;
-  color: #59503f;
-  font-weight: bold;
-  text-align: center;
-  position: relative;
-}
-
-.unstable-count {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  font-size: 10px;
-  color: red;
-  font-weight: bold;
-}
-
-.score {
-  position: absolute;
-  left: 0;
-  top: 84px;
-  width: 100%;
-  font-size: 28px;
-  color: rgba(255, 255, 255, 0.6);
-  text-align: center;
-}
-
-.current-score {
-  position: absolute;
-  left: 0;
-  top: 122px;
-  width: 100%;
-  font-size: 28px;
-  color: rgba(255, 255, 255, 0.6);
-  text-align: center;
-}
-
-.menu-overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.menu-content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.mode-btn {
-  position: absolute;
-  left: 45px;
-  top: 633px;
-}
-</style>
+  </style>

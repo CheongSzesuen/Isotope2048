@@ -1,5 +1,5 @@
 {
-  "package": "com.isotope.2048.band",
+  "package": "com.isotope.2048.band.n67",
   "name": "同位素2048",
   "versionName": "1.2",
   "versionCode": 1,
@@ -29,7 +29,9 @@
     "pages": {
 	"pages/index": {
 		"component": "index"
-	}
+	},"pages/settings": {
+    "component": "settings"
+  }
 }
   }
 }

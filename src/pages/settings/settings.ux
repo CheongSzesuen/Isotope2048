@@ -1,0 +1,164 @@
+<template>
+	<div class="bg">
+	  <!-- Background Image -->
+	  <img src="/common/about.png" class="bg-img"/>
+	  
+	  <!-- Back Button -->
+	  <img src="/common/back_b.png" 
+		   onclick="exit" 
+		   class="back-button"/>
+	  
+	  <!-- Dark/Light Mode Toggle Button -->
+	  <img src="{{dark ? '/common/DarkMode.png' : '/common/LightMode.png'}}"
+		   onclick="toggleDarkMode"
+		   class="mode-toggle"/>
+	  
+	  <!-- 时间显示 -->
+	  <text class="score" style="font-size: 20px;top: 12px;">{{time}}</text>
+	  
+	  <!-- 最高分显示 -->
+	  <div class="high-score-container">
+		<text class="high-score-text">{{highScore}}</text>
+	  </div>
+	</div>
+  </template>
+  
+  <script>
+  import router from "@system.router";
+  import storage from "@system.storage";
+  
+  export default {
+	data: {
+	  highScore: 0,
+	  dark: true,
+	  time: "00:00"
+	},
+	
+	onInit() {
+	  // 初始化时间
+	  this.updateTime()
+    
+    // 设置定时器每分钟更新一次
+    setInterval(() => this.updateTime(), 1000)
+	  
+	  // 加载最高分
+	  this.loadHighScore();
+	  // 加载主题模式
+	  this.loadThemeMode();
+	},
+	
+	updateTime() {
+    const now = new Date()
+    this.time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
+  },
+	
+	exit() {
+	  router.back();
+	},
+	
+	toggleDarkMode() {
+	  this.dark = !this.dark;
+	  storage.set({
+		key: "dark",
+		value: this.dark ? "dark" : "light",
+		success: () => {},
+		fail: (data, code) => {
+		  console.error(`保存失败: ${code}`);
+		}
+	  });
+	},
+	
+	loadHighScore() {
+	  storage.get({
+		key: "score",
+		success: (data) => {
+		  if (data) {
+			try {
+			  const gameData = JSON.parse(data);
+			  this.highScore = gameData.hs || 0;
+			} catch (e) {
+			  console.error("解析游戏数据失败:", e);
+			  this.highScore = 0;
+			}
+		  } else {
+			this.highScore = 0;
+		  }
+		},
+		fail: () => {
+		  this.highScore = 0;
+		}
+	  });
+	},
+	
+	loadThemeMode() {
+	  storage.get({
+		key: "dark",
+		success: (data) => {
+		  this.dark = data === "dark";
+		},
+		fail: () => {
+		  this.dark = true; // 默认暗色模式
+		}
+	  });
+	}
+  };
+  </script>
+  
+  <style>
+  .bg {
+	position: absolute;
+	width: 336px;
+	height: 480px;
+	background-color: black;
+  }
+  
+  .bg-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+  }
+  
+  .back-button {
+	position: absolute;
+	left: 6px;
+	top: 6px;
+  }
+  
+  .high-score-container {
+	position: absolute;
+	top: 280px;
+	left: 16px;
+  }
+  
+  .high-score-text {
+	font-size: 30px;
+	font-weight: bold;
+	color: white;
+  }
+  
+  .mode-toggle {
+	position: absolute;
+	left: 258px;
+	top: 6px;
+  }
+  
+  .time-text {
+	position: absolute;
+	left: 150px;
+	top: 12px;
+	font-size: 20px;
+	color: white;
+	text-align: center;
+	width: 36px;
+  }
+  .score {
+	position: absolute;
+	left: 78px;
+	top: 441px;
+	width: 180px;
+	height: 32px;
+	font-size: 24px;
+	text-align: center;
+	color: rgba(255, 255, 255, 0.6);
+}
+  </style>
