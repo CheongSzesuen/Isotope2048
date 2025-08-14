@@ -7,8 +7,8 @@
 		<img src="/common/Back_B_rgb.png" style="position: absolute;left: 6px;top: 6px;" @click="exit"/>
 		<!-- 设置按钮(暗色) -->
 		<img src="/common/info_b.png" style="position: absolute;left: 258px;top: 6px;" @click="openMenu"/>
-		<img style="left: 6px;top: 402px;" src="/common/Reset_B.png" @click="new_game" />
-		<img style="position: absolute;left: 258px;top: 402px;" src="/common/Undo_B.png" @click="chcb" />
+		<img src="/common/Reset_B.png" style="position: absolute;left: 6px;top: 402px;" @click="new_game" />
+		<img src="/common/Undo_B.png" style="position: absolute;left: 258px;top: 402px;" @click="chcb" />
 		<!--积分版-->
 		<text class="score">{{ sco }}</text>
 		<text class="score" style="font-size: 20px;top: 12px;">{{time}}</text>
@@ -19,8 +19,8 @@
 		<img src="/common/back.png" style="position: absolute;left: 6px;top: 6px;" @click="exit"/>
 		<!-- 设置按钮(亮色) -->
 		<img src="/common/info.png" style="position: absolute;left: 258px;top: 6px;" @click="openMenu"/>
-		<img style="left: 6px;top: 402px;" src="/common/Reset.png" @click="new_game" />
-		<img style="position: absolute;left: 258px;top: 402px;" src="/common/Undo.png" @click="chcb" />
+		<img src="/common/Reset.png" style="position: absolute;left: 6px;top: 402px;" @click="new_game" />
+		<img src="/common/Undo.png" style="position: absolute;left: 258px;top: 402px;" @click="chcb" />
 		<!--积分版-->
 		<text class="score" style="color: rgba(0, 0, 0, 0.4);">{{ sco }}</text>
 		<text class="score" style="font-size: 20px;top: 12px;color: rgba(0, 0, 0, 0.6);">{{time}}</text>
