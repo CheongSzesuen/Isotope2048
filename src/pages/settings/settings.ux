@@ -14,7 +14,7 @@
 		   class="mode-toggle"/>
 	  
 	  <!-- 时间显示 -->
-	  <text class="score" style="font-size: 20px;top: 12px;">{{time}}</text>
+	  <text class="time-display time-small">{{time}}</text>
 	  
 	  <!-- 最高分显示 -->
 	  <div class="high-score-container">
@@ -105,60 +105,69 @@
   </script>
   
   <style>
-  .bg {
-	position: absolute;
-	width: 336px;
-	height: 480px;
-	background-color: black;
-  }
-  
-  .bg-img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-  }
-  
-  .back-button {
-	position: absolute;
-	left: 6px;
-	top: 6px;
-  }
-  
-  .high-score-container {
-	position: absolute;
-	top: 280px;
-	left: 16px;
-  }
-  
-  .high-score-text {
-	font-size: 30px;
-	font-weight: bold;
-	color: white;
-  }
-  
-  .mode-toggle {
-	position: absolute;
-	left: 258px;
-	top: 6px;
-  }
-  
-  .time-text {
-	position: absolute;
-	left: 150px;
-	top: 12px;
-	font-size: 20px;
-	color: white;
-	text-align: center;
-	width: 36px;
-  }
-  .score {
-	position: absolute;
-	left: 78px;
-	top: 441px;
-	width: 180px;
-	height: 32px;
-	font-size: 24px;
-	text-align: center;
-	color: rgba(255, 255, 255, 0.6);
+  /* 基础样式 */
+.bg {
+  position: absolute;
+  width: 336px;
+  height: 480px;
+  background-color: black;
+}
+
+/* 背景图片 */
+.bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 返回按钮 */
+.back-button {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+}
+
+/* 模式切换按钮 */
+.mode-toggle {
+  position: absolute;
+  left: 258px;
+  top: 6px;
+}
+
+/* 时间显示 */
+.time-display {
+  position: absolute;
+  left: 78px;
+  top: 441px;
+  width: 180px;
+  height: 32px;
+  font-size: 24px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 时间小字体 */
+.time-small {
+  font-size: 20px;
+  top: 12px;
+}
+
+/* 最高分容器 */
+.high-score-container {
+  position: absolute;
+  top: 280px;
+  left: 16px;
+}
+
+/* 最高分文本 */
+.high-score-text {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+}
+
+/* 浅色模式下的文本颜色 */
+.text-light {
+  color: rgba(0, 0, 0, 0.6);
 }
   </style>
