@@ -9,7 +9,8 @@
     "start": "aiot start --watch",
     "build": "aiot build",
     "release": "aiot release --enable-jsc --enable-protobuf",
-    "lint": "eslint --format codeframe --fix --ext .ux,.js src/"
+    "lint": "eslint --format codeframe --fix --ext .ux,.js src/",
+    "postinstall": "husky install"
   },
   "lint-staged": {
     "*.{ux,js}": [
@@ -25,6 +26,18 @@
   },
   "devDependencies": {
     "@aiot-toolkit/jsc": "^1.0.3",
-    "aiot-toolkit": "^2.0.4"
+    "@commitlint/cli": "^18.0.0",
+    "@commitlint/config-conventional": "^18.0.0",
+    "aiot-toolkit": "^2.0.4",
+    "eslint": "^8.57.0",
+    "husky": "^8.0.0",
+    "lru-cache": "^10.0.0",
+    "prettier": "^3.0.0",
+    "rimraf": "^5.0.1",
+    "stylelint": "^15.0.0",
+    "tmp": "^0.2.4"
+  },
+  "resolutions": {
+    "tmp": "^0.2.4"
   }
 }
