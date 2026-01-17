@@ -1,7 +1,7 @@
 {
   "package": "cn.waijade.Isotope.2048",
   "name": "同位素2048",
-  "versionName": "1.2",
+  "versionName": "1.3.5",
   "versionCode": 1,
   "minPlatformVersion": 1000,
   "icon": "/common/logo.png",
