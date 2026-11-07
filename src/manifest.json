@@ -18,6 +18,9 @@
     {
       "name": "system.storage"
     },
+    {
+      "name": "system.device"
+    },
     { "name": "system.vibrator" }
   ],
   "config": {

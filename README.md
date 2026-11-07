@@ -1,3 +1,10 @@
+## 设备适配
+
+- 小米手环 9/10（192×490 胶囊屏）：原始布局，`designWidth: device-width` 下 1:1 像素坐标。
+- 红米手表6（432×514 矩形屏）：独立 watch 布局，启动时经 `system.device.getInfo()` 检测（宽 400+ 且高大于宽的矩形屏自动匹配），包括 380×380 棋盘、88×88 大方块、放大字号与重新排布的按钮/分数/关于页。
+- 红米手表6 的棋盘网格底图为 `src/common/watch-grid-light.png` / `watch-grid-dark.png`，由 `scripts/gen-watch-grid.ps1` 生成（配色取样自 bg1/bg2 素材）；改动棋盘坐标后需同步重跑该脚本。
+- 已在 432×514 设备参数下通过 VM 冒烟验证（布局检测、格子定位、移动合成），真机验收待完成。
+
 ## 快速上手
 
 ### 1. 开发
@@ -13,6 +20,8 @@ npm run start
 npm run build
 npm run release
 ```
+
+release 打包需要项目内 `sign/release/` 下的 `private.pem` + `certificate.pem`；当前使用 aiot-toolkit 自带开发证书，供个人侧载安装，上架时请替换为自己的开发者证书。
 
 ### 3. 调试
 
