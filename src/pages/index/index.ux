@@ -1,53 +1,54 @@
 <template>
-  <div class="container" @swipe="move">
+  <div class="container {{ isWatchRect ? 'watch-container' : '' }}" @swipe="move">
     <!--背景+按钮-->
-    <div class="bg" if="{{ dark }}">
-      <img src="/common/bg2.png" class="bg-img" />
-      <img class="btn-reset" src="/common/reset_b.png" @click="new_game" />
-      <img class="btn-undo" src="/common/undo_b.png" @click="chcb" />
-      <img class="btn-info" src="/common/info_b.png" @click="openMenu()" />
+    <div class="bg {{ isWatchRect ? 'watch-bg-dark' : '' }}" if="{{ dark }}">
+      <img src="/common/bg2.png" class="bg-img {{ isWatchRect ? 'watch-hide' : '' }}" />
+      <img class="btn-reset {{ isWatchRect ? 'watch-reset' : '' }}" src="/common/reset_b.png" @click="new_game" />
+      <img class="btn-undo {{ isWatchRect ? 'watch-undo' : '' }}" src="/common/undo_b.png" @click="chcb" />
+      <img class="btn-info {{ isWatchRect ? 'watch-info' : '' }}" src="/common/info_b.png" @click="openMenu()" />
     </div>
-    <div class="bg" else>
-      <img src="/common/bg1.png" class="bg-img" />
-      <img class="btn-reset" src="/common/reset.png" @click="new_game" />
-      <img class="btn-undo" src="/common/undo.png" @click="chcb" />
-      <img class="btn-info" src="/common/info.png" @click="openMenu()" />
+    <div class="bg {{ isWatchRect ? 'watch-bg-light' : '' }}" else>
+      <img src="/common/bg1.png" class="bg-img {{ isWatchRect ? 'watch-hide' : '' }}" />
+      <img class="btn-reset {{ isWatchRect ? 'watch-reset' : '' }}" src="/common/reset.png" @click="new_game" />
+      <img class="btn-undo {{ isWatchRect ? 'watch-undo' : '' }}" src="/common/undo.png" @click="chcb" />
+      <img class="btn-info {{ isWatchRect ? 'watch-info' : '' }}" src="/common/info.png" @click="openMenu()" />
     </div>
 
     <!--游戏区域-->
-    <div class="game-board">
+    <div class="game-board {{ isWatchRect ? 'watch-board' : '' }}">
+      <img if="{{ isWatchRect }}" class="watch-grid" src="{{ dark ? '/common/watch-grid-dark.png' : '/common/watch-grid-light.png' }}" />
       <block for="blocks">
         <text
-          class="square"
+          class="square {{ posCls[$item] }}"
           style="background-color: {{ bgc[md[$item]] }};"
           if="{{ !dark }}"
           id="{{ $item }}"
         >
           {{ getElementSymbol(md[$item]) }}
-          <span if="{{ unstable[$item] > 0 }}" class="unstable-count">{{ unstable[$item] }}</span>
+          <span if="{{ unstable[$item] > 0 }}" class="unstable-count {{ isWatchRect ? 'watch-unstable' : '' }}">{{ unstable[$item] }}</span>
         </text>
         <text
-          class="square"
+          class="square {{ posCls[$item] }}"
           style="color: {{ bgc[md[$item]] }};background-color: {{ ise[$item] }}"
           else
           id="{{ $item }}"
         >
           {{ getElementSymbol(md[$item]) }}
-          <span if="{{ unstable[$item] > 0 }}" class="unstable-count">{{ unstable[$item] }}</span>
+          <span if="{{ unstable[$item] > 0 }}" class="unstable-count {{ isWatchRect ? 'watch-unstable' : '' }}">{{ unstable[$item] }}</span>
         </text>
       </block>
     </div>
 
     <!--分数显示-->
-    <text class="score">最高 {{ hsc }}</text>
-    <text class="current-score">当前 {{ sco }}</text>
+    <text class="score {{ isWatchRect ? 'watch-score' : '' }}">最高 {{ hsc }}</text>
+    <text class="current-score {{ isWatchRect ? 'watch-current-score' : '' }}">当前 {{ sco }}</text>
 
     <!--关于菜单-->
     <div class="menu-overlay" if="{{ menuFlag }}">
       <scroll class="menu-content" scroll-y="true" bounces="true" id="about">
-        <img src="/common/about.png" />
-        <img src="/common/true.png" if="{{ dark }}" class="mode-btn" @click="changeMode" />
-        <img src="/common/false.png" else class="mode-btn" @click="changeMode" />
+        <img src="/common/about.png" class="about-img {{ isWatchRect ? 'watch-about' : '' }}" />
+        <img src="/common/true.png" if="{{ dark }}" class="mode-btn {{ isWatchRect ? 'watch-mode-btn' : '' }}" @click="changeMode" />
+        <img src="/common/false.png" else class="mode-btn {{ isWatchRect ? 'watch-mode-btn' : '' }}" @click="changeMode" />
         <!-- <img src="/common/true.png" if="{{ ani }}" class="ani-btn" @click="changeani" />
         <img src="/common/false.png" else class="ani-btn" @click="changeani" /> -->
       </scroll>
@@ -55,7 +56,7 @@
 
     <!--返回按钮-->
     <img
-      class="btn-back"
+      class="btn-back {{ isWatchRect ? 'watch-back' : '' }}"
       src="{{ dark||menuFlag ? '/common/back_b.png' : '/common/back.png' }}"
       @click="exit('e')"
     />
@@ -66,6 +67,7 @@
 import prompt from "@system.prompt"
 import storage from "@system.storage"
 import vibrator from "@system.vibrator"
+import device from "@system.device"
 
 // 元素符号映射表
 const elements = {
@@ -125,7 +127,9 @@ export default {
     ch: 0,
     dark: false,
     menuFlag: false,
-    ani: true
+    ani: true,
+    isWatchRect: false,
+    posCls: Array(16).fill("")
   },
 
   getElementSymbol(value) {
@@ -134,6 +138,21 @@ export default {
 
   onInit() {
     that = this
+    // 红米手表6 (432×514) 等宽 400+ 的竖向矩形屏走 watch 布局。
+    device.getInfo({
+      success: (info) => {
+        const width = info && typeof info.screenWidth === "number" ? info.screenWidth : 0
+        const height = info && typeof info.screenHeight === "number" ? info.screenHeight : 0
+        if (width >= 400 && height > width) {
+          this.isWatchRect = true
+          const cls = []
+          for (let i = 0; i < 16; i++) {
+            cls[i] = "watch-square watch-col-" + (i % 4) + " watch-row-" + Math.floor(i / 4)
+          }
+          this.posCls = cls
+        }
+      }
+    })
     // 初始化颜色
     let tempc =
       "rgba(0,0,0,0) #EFE5DA #F0E0C9 #fcb477 #ff9c61 #ff865d #ff6a38 #ebcf71 #ebcc5f #ebc94f #ebc53f #ebc22c #F2B6B6 #E8ED51 #FFE3FB #E8FF8C #FFDEC9 #F5A433 #E6109B #96C4E6 #E560CD".split(
@@ -952,5 +971,115 @@ function noBlockVertical(a, b, c, d) {
   position: absolute;
   left: 45px;
   top: 633px;
+}
+
+/* 红米手表6 (432×514 矩形屏)：device-width 下按物理像素布局。
+   棋盘 380x380，格子 88x88，行列间距 93，起始偏移 4。 */
+.watch-container {
+  width: 432px;
+  height: 514px;
+}
+
+.watch-hide {
+  display: none;
+}
+
+.watch-bg-light {
+  background-color: #bbada0;
+}
+
+.watch-bg-dark {
+  background-color: #000000;
+}
+
+.watch-board {
+  left: 26px;
+  top: 86px;
+  width: 380px;
+  height: 380px;
+  padding-top: 0px;
+  padding-left: 0px;
+  border-radius: 28px;
+}
+
+.watch-grid {
+  width: 380px;
+  height: 380px;
+}
+
+.watch-square {
+  position: absolute;
+  margin-top: 0px;
+  margin-left: 0px;
+  width: 88px;
+  height: 88px;
+  border-radius: 24px;
+  font-size: 36px;
+}
+
+.watch-col-0 { left: 4px; }
+.watch-col-1 { left: 97px; }
+.watch-col-2 { left: 190px; }
+.watch-col-3 { left: 283px; }
+.watch-row-0 { top: 4px; }
+.watch-row-1 { top: 97px; }
+.watch-row-2 { top: 190px; }
+.watch-row-3 { top: 283px; }
+
+.watch-unstable {
+  bottom: 4px;
+  right: 4px;
+  font-size: 22px;
+}
+
+.watch-score {
+  top: 8px;
+  width: 432px;
+  font-size: 28px;
+}
+
+.watch-current-score {
+  top: 46px;
+  width: 432px;
+  font-size: 28px;
+}
+
+.watch-reset {
+  left: 54px;
+  top: 470px;
+  width: 60px;
+  height: 42px;
+}
+
+.watch-undo {
+  left: 186px;
+  top: 470px;
+  width: 60px;
+  height: 42px;
+}
+
+.watch-info {
+  left: 318px;
+  top: 470px;
+  width: 60px;
+  height: 42px;
+}
+
+.watch-back {
+  left: 16px;
+  top: 8px;
+  width: 82px;
+  height: 58px;
+}
+
+.watch-about {
+  width: 432px;
+}
+
+.watch-mode-btn {
+  left: 101px;
+  top: 1424px;
+  width: 229px;
+  height: 162px;
 }
 </style>
